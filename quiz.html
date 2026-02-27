@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Strategic Management Midterm Quiz</title>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0f172a;
+      color: #e2e8f0;
+      font-family: Georgia, 'Times New Roman', serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+    #root { width: 100%; max-width: 780px; }
+
+    /* ── CARDS ── */
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      padding: 2.25rem 2.5rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,.45);
+    }
+
+    /* ── HEADER ── */
+    .app-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .app-header h1 {
+      font-size: 1.85rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #22d3ee, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.25;
+      margin-bottom: .4rem;
+    }
+    .app-header p { color: #94a3b8; font-size: .95rem; font-family: 'Helvetica Neue', sans-serif; }
+
+    /* ── PROGRESS BAR ── */
+    .progress-wrap {
+      margin-bottom: 1.6rem;
+    }
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: .82rem;
+      font-family: 'Helvetica Neue', sans-serif;
+      color: #94a3b8;
+      margin-bottom: .45rem;
+    }
+    .progress-track {
+      height: 8px;
+      background: #334155;
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #22d3ee, #a78bfa);
+      border-radius: 99px;
+      transition: width .4s ease;
+    }
+
+    /* ── QUESTION ── */
+    .question-topic {
+      display: inline-block;
+      background: rgba(34,211,238,.12);
+      color: #22d3ee;
+      font-size: .78rem;
+      font-family: 'Helvetica Neue', sans-serif;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: .25rem .75rem;
+      border-radius: 99px;
+      margin-bottom: 1rem;
+    }
+    .question-text {
+      font-size: 1.15rem;
+      line-height: 1.65;
+      color: #f1f5f9;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── OPTIONS ── */
+    .options { display: flex; flex-direction: column; gap: .7rem; margin-bottom: 1.5rem; }
+    .option-btn {
+      display: flex;
+      align-items: flex-start;
+      gap: .85rem;
+      background: #0f172a;
+      border: 1.5px solid #334155;
+      border-radius: 10px;
+      padding: .85rem 1.1rem;
+      cursor: pointer;
+      text-align: left;
+      transition: border-color .18s, background .18s, transform .1s;
+      font-family: Georgia, serif;
+      font-size: .97rem;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+    .option-btn:hover:not(:disabled) {
+      border-color: #22d3ee;
+      background: rgba(34,211,238,.06);
+      transform: translateX(3px);
+    }
+    .option-btn.selected {
+      border-color: #a78bfa;
+      background: rgba(167,139,250,.1);
+      color: #f1f5f9;
+    }
+    .option-btn.correct {
+      border-color: #4ade80;
+      background: rgba(74,222,128,.1);
+      color: #bbf7d0;
+    }
+    .option-btn.incorrect {
+      border-color: #f87171;
+      background: rgba(248,113,113,.1);
+      color: #fecaca;
+    }
+    .option-btn.reveal-correct {
+      border-color: #4ade80;
+      background: rgba(74,222,128,.07);
+      color: #bbf7d0;
+    }
+    .option-btn:disabled { cursor: default; transform: none; }
+    .option-letter {
+      flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      background: #1e293b;
+      border: 1px solid #475569;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .8rem;
+      font-family: 'Helvetica Neue', sans-serif;
+      font-weight: 700;
+      color: #94a3b8;
+    }
+    .option-btn.selected .option-letter { background: #a78bfa; border-color: #a78bfa; color: #fff; }
+    .option-btn.correct .option-letter,
+    .option-btn.reveal-correct .option-letter { background: #4ade80; border-color: #4ade80; color: #052e16; }
+    .option-btn.incorrect .option-letter { background: #f87171; border-color: #f87171; color: #fff; }
+
+    /* ── FEEDBACK ── */
+    .feedback {
+      border-radius: 10px;
+      padding: .85rem 1.1rem;
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: .93rem;
+      margin-bottom: 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+    }
+    .feedback.correct { background: rgba(74,222,128,.12); color: #86efac; border: 1px solid rgba(74,222,128,.3); }
+    .feedback.incorrect { background: rgba(248,113,113,.12); color: #fca5a5; border: 1px solid rgba(248,113,113,.3); }
+    .feedback-icon { font-size: 1.1rem; }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      padding: .7rem 1.6rem;
+      border-radius: 10px;
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: .97rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity .18s, transform .1s, box-shadow .18s;
+      border: none;
+    }
+    .btn:hover:not(:disabled) { transform: translateY(-1px); }
+    .btn:active:not(:disabled) { transform: translateY(0); }
+    .btn:disabled { opacity: .38; cursor: not-allowed; }
+    .btn-primary {
+      background: linear-gradient(135deg, #22d3ee, #a78bfa);
+      color: #0f172a;
+      box-shadow: 0 4px 14px rgba(34,211,238,.25);
+    }
+    .btn-primary:hover:not(:disabled) { box-shadow: 0 6px 20px rgba(34,211,238,.4); }
+    .btn-secondary {
+      background: #1e293b;
+      color: #cbd5e1;
+      border: 1.5px solid #475569;
+    }
+    .btn-secondary:hover:not(:disabled) { border-color: #94a3b8; color: #f1f5f9; }
+    .btn-row {
+      display: flex;
+      justify-content: flex-end;
+      gap: .75rem;
+    }
+
+    /* ── START SCREEN ── */
+    .start-screen { text-align: center; }
+    .start-screen .badge {
+      display: inline-block;
+      background: rgba(167,139,250,.15);
+      border: 1px solid rgba(167,139,250,.3);
+      color: #a78bfa;
+      border-radius: 99px;
+      padding: .3rem 1rem;
+      font-size: .82rem;
+      font-family: 'Helvetica Neue', sans-serif;
+      letter-spacing: .05em;
+      margin-bottom: 1.4rem;
+    }
+    .start-screen h2 { font-size: 2rem; color: #f1f5f9; margin-bottom: .6rem; }
+    .start-screen p { color: #94a3b8; font-family: 'Helvetica Neue', sans-serif; line-height: 1.7; margin-bottom: 1.2rem; }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .9rem;
+      margin: 1.6rem 0 2rem;
+    }
+    .info-card {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 1rem;
+    }
+    .info-card .val {
+      font-size: 1.6rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #22d3ee, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .info-card .lbl {
+      font-size: .78rem;
+      color: #64748b;
+      font-family: 'Helvetica Neue', sans-serif;
+      margin-top: .15rem;
+    }
+
+    /* ── RESULTS ── */
+    .results-screen { text-align: center; }
+    .score-ring {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 1.4rem;
+    }
+    .score-ring svg { transform: rotate(-90deg); }
+    .score-ring-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .score-ring-text .big { font-size: 2rem; font-weight: 700; color: #f1f5f9; line-height: 1; }
+    .score-ring-text .sub { font-size: .75rem; color: #64748b; font-family: 'Helvetica Neue', sans-serif; }
+    .grade-badge {
+      display: inline-block;
+      font-size: 1.4rem;
+      font-weight: 700;
+      padding: .4rem 1.2rem;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      font-family: 'Helvetica Neue', sans-serif;
+    }
+    .grade-A { background: rgba(74,222,128,.15); color: #4ade80; border: 1px solid rgba(74,222,128,.3); }
+    .grade-B { background: rgba(34,211,238,.15); color: #22d3ee; border: 1px solid rgba(34,211,238,.3); }
+    .grade-C { background: rgba(250,204,21,.15); color: #fbbf24; border: 1px solid rgba(250,204,21,.3); }
+    .grade-D { background: rgba(251,146,60,.15); color: #fb923c; border: 1px solid rgba(251,146,60,.3); }
+    .grade-F { background: rgba(248,113,113,.15); color: #f87171; border: 1px solid rgba(248,113,113,.3); }
+    .encourage { color: #94a3b8; font-family: 'Helvetica Neue', sans-serif; margin-bottom: 1.8rem; font-style: italic; }
+    .results-btns { display: flex; flex-direction: column; gap: .75rem; }
+
+    /* ── REVIEW ── */
+    .review-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: .5rem;
+    }
+    .review-header h2 { font-size: 1.25rem; color: #f1f5f9; }
+    .review-nav { display: flex; align-items: center; gap: .75rem; }
+    .review-counter { font-family: 'Helvetica Neue', sans-serif; font-size: .88rem; color: #64748b; }
+    .review-status {
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: .82rem;
+      font-weight: 600;
+      padding: .25rem .75rem;
+      border-radius: 99px;
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+    .review-status.correct { background: rgba(74,222,128,.12); color: #4ade80; }
+    .review-status.incorrect { background: rgba(248,113,113,.12); color: #f87171; }
+    .review-your { font-size: .8rem; font-family: 'Helvetica Neue', sans-serif; color: #64748b; margin-bottom: .25rem; }
+
+    /* ── DIVIDER ── */
+    .divider { height: 1px; background: #1e293b; margin: 1.5rem 0; }
+
+    @media (max-width: 500px) {
+      .card { padding: 1.5rem 1.2rem; }
+      .info-grid { grid-template-columns: 1fr; }
+      .btn-row { flex-direction: column; }
+      .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useMemo } = React;
+
+/* ─────────────────────────────────────────────
+   50-QUESTION BANK  (one per study-guide topic)
+───────────────────────────────────────────────*/
+const QUESTION_BANK = [
+  {
+    topic: "Strategy as Pattern",
+    question: "Which definition best describes 'strategy as pattern'?",
+    options: [
+      "A deliberate plan formulated by top management before any action is taken",
+      "Consistency in behavior over time, whether intended or not",
+      "A firm's chosen position relative to competitors in the marketplace",
+      "A competitive ploy designed to outmaneuver a specific rival"
+    ],
+    answer: 1
+  },
+  {
+    topic: "Differentiation Disadvantage",
+    question: "What is the primary disadvantage of pursuing a differentiation strategy?",
+    options: [
+      "It always leads to a permanent loss of market share",
+      "It completely eliminates barriers to entry for new competitors",
+      "The added cost of differentiation may exceed what customers are willing to pay",
+      "It makes supply chain management operationally impossible"
+    ],
+    answer: 2
+  },
+  {
+    topic: "Emergent Strategy",
+    question: "An emergent strategy is best described as one that:",
+    options: [
+      "Is fully planned and documented before implementation begins",
+      "Arises from consistent patterns of actions taken without a prior formal plan",
+      "Is designed exclusively to signal competitors about future intentions",
+      "Is mandated by a firm's board of directors during annual reviews"
+    ],
+    answer: 1
+  },
+  {
+    topic: "Mission Statement",
+    question: "A mission statement primarily describes:",
+    options: [
+      "Where the organization aspires to be ten years into the future",
+      "The specific financial targets set for the upcoming fiscal quarter",
+      "The organization's purpose, identity, and reason for existence",
+      "The set of tactics management uses to outperform rivals"
+    ],
+    answer: 2
+  },
+  {
+    topic: "PESTEL Analysis",
+    question: "PESTEL analysis is best used to assess:",
+    options: [
+      "A firm's internal strengths and weaknesses relative to competitors",
+      "The competitive dynamics within a specific industry",
+      "The macro-environmental forces that affect all organizations",
+      "A company's primary and support value-creating activities"
+    ],
+    answer: 2
+  },
+  {
+    topic: "Technological Factors",
+    question: "Which of the following is an example of a technological factor in PESTEL analysis?",
+    options: [
+      "Changes in average consumer income and purchasing power",
+      "New government emissions regulations applied to manufacturers",
+      "The widespread rise of artificial intelligence and automation",
+      "Shifts in cultural attitudes toward work-life balance"
+    ],
+    answer: 2
+  },
+  {
+    topic: "Generic Strategy",
+    question: "According to Porter, the three generic competitive strategies are:",
+    options: [
+      "Growth, stability, and retrenchment",
+      "Cost leadership, differentiation, and focus",
+      "Prospecting, defending, and analyzing",
+      "Offensive, defensive, and guerrilla"
+    ],
+    answer: 1
+  },
+  {
+    topic: "Performance Measure",
+    question: "A performance measure is best described as:",
+    options: [
+      "A statement of a firm's long-term aspirational goals",
+      "A financial instrument for allocating capital across business units",
+      "A metric used to assess progress toward organizational goals",
+      "A regulatory compliance requirement imposed by government agencies"
+    ],
+    answer: 2
+  },
+  {
+    topic: "Price Sensitivity Risk",
+    question: "In the context of differentiation strategy, 'price sensitivity risk' refers to:",
+    options: [
+      "The risk that raw material costs will rise unexpectedly due to inflation",
+      "The danger that customers will switch to lower-cost competitors",
+      "The chance that a firm's pricing algorithm will produce errors",
+      "Regulatory limits placed on how much a firm can charge for products"
+    ],
+    answer: 1
+  },
+  {
+    topic: "Specific Goals",
+    question: "In the SMART framework, 'Specific' goals are those that:",
+    options: [
+      "Can always be accomplished within a short timeframe",
+      "Are tied to measurable numerical outcomes",
+      "Are clearly defined with no ambiguity about what is to be achieved",
+      "Align with the broader long-term strategic vision of the organization"
+    ],
+    answer: 2
+  },
+  {
+    topic: "Realized Strategy",
+    question: "A realized strategy is:",
+    options: [
+      "The strategy that management originally intended to pursue",
+      "A strategy that failed to meet its stated objectives",
+      "The actual strategy a firm pursues as evidenced by its observed actions",
+      "A strategy developed exclusively by a firm's board of directors"
+    ],
+    answer: 2
+  },
+  {
+    topic: "Triple Bottom Line",
+    question: "The 'triple bottom line' framework holds that organizations should measure performance in terms of:",
+    options: [
+      "Revenue, market share, and customer satisfaction",
+      "People, planet, and profit",
+      "Innovation, efficiency, and growth",
+      "Financial, operational, and strategic outcomes"
+    ],
+    answer: 1
+  },
+  {
+    topic: "Social Factors",
+    question: "Social factors in PESTEL analysis include:",
+    options: [
+      "Interest rate fluctuations and inflation trends",
+      "Government trade policies and import tariffs",
+      "Demographic trends, cultural attitudes, and lifestyle shifts",
+      "Advances in biotechnology and computing power"
+    ],
+    answer: 2
+  },
+  {
+    topic: "SMART Goals",
+    question: "The acronym SMART stands for goals that are Specific, Measurable, Achievable, Relevant, and:",
+    options: [
+      "Realistic",
+      "Rational",
+      "Risk-adjusted",
+      "Time-bound"
+    ],
+    answer: 3
+  },
+  {
+    topic: "Difficult to Imitate",
+    question: "In the VRIO framework, a resource that is 'difficult to imitate' means:",
+    options: [
+      "It is owned exclusively by a government entity or public institution",
+      "Competitors face significant obstacles in replicating it",
+      "It has no direct substitute anywhere in the marketplace",
+      "It generates returns consistently above the industry average"
+    ],
+    answer: 1
+  },
+  {
+    topic: "Differentiation Strategy",
+    question: "A firm pursuing a differentiation strategy seeks to:",
+    options: [
+      "Produce at the absolute lowest possible cost in the industry",
+      "Serve only a very narrow and specialized market segment",
+      "Offer unique products or services that customers value and will pay a premium for",
+      "Rapidly exit markets as soon as competition intensifies"
+    ],
+    answer: 2
+  },
+  {
+    topic: "Strategic Plan Steps",
+    question: "Which sequence correctly represents the steps in a typical strategic planning process?",
+    options: [
+      "Implement → Evaluate → Formulate → Analyze",
+      "Analyze → Formulate → Implement → Evaluate",
+      "Formulate → Analyze → Evaluate → Implement",
+      "Evaluate → Implement → Analyze → Formulate"
+    ],
+    answer: 1
+  },
+  {
+    topic: "Trade Secret",
+    question: "Which of the following is the best example of a trade secret?",
+    options: [
+      "A government-issued patent on a newly developed pharmaceutical drug",
+      "A registered trademark for a company's corporate logo",
+      "A soft drink formula kept strictly confidential and never publicly disclosed",
+      "A copyright on a published novel sold in bookstores"
+    ],
+    answer: 2
+  },
+  {
+    topic: "Franchising Concept",
+    question: "Franchising is a business arrangement in which:",
+    options: [
+      "Two firms merge to form a single new corporate entity",
+      "A parent company permanently sells all rights to a product to a buyer",
+      "A franchisor licenses its brand, business model, and processes to a franchisee",
+      "A firm outsources all of its production to international suppliers"
+    ],
+    answer: 2
+  },
+  {
+    topic: "Time-Bound Goals",
+    question: "A time-bound goal is one that:",
+    options: [
+      "Can be adjusted freely at any point during the planning cycle",
+      "Has a specific deadline or target date for completion",
+      "Focuses exclusively on financial or quantitative outcomes",
+      "Is set by external stakeholders rather than internal management"
+    ],
+    answer: 1
+  },
+  {
+    topic: "Intended Strategy",
+    question: "An intended strategy refers to:",
+    options: [
+      "The strategy that emerges naturally and spontaneously through daily operations",
+      "The portions of a strategy that were abandoned during implementation",
+      "The strategy that management formally plans and formulates in advance",
+      "A competitor's successful strategy that a firm seeks to imitate"
+    ],
+    answer: 2
+  },
+  {
+    topic: "R&D Risk",
+    question: "Which best describes the R&D risk associated with pursuing a differentiation strategy?",
+    options: [
+      "Spending on research automatically guarantees a sustained competitive advantage",
+      "R&D investments may not produce commercially successful or viable innovations",
+      "R&D always results in higher production costs than originally forecasted",
+      "Research and development is financially viable only for very large firms"
+    ],
+    answer: 1
+  },
+  {
+    topic: "Brand Building Importance",
+    question: "Why is brand building particularly important for firms pursuing a differentiation strategy?",
+    options: [
+      "It completely eliminates the need for ongoing product innovation",
+      "A strong brand creates customer loyalty and justifies charging a premium price",
+      "It eliminates the risk of increased supplier bargaining power",
+      "It allows the firm to abandon quality and compete purely on price"
+    ],
+    answer: 1
+  },
+  {
+    topic: "Strategy as Position",
+    question: "'Strategy as position' is best described as:",
+    options: [
+      "A sequential plan for ordering a firm's activities and investments over time",
+      "The emergent pattern of decisions that arises from daily operational choices",
+      "How a firm locates and differentiates itself within its competitive environment",
+      "A deceptive competitive move designed to confuse or mislead rivals"
+    ],
+    answer: 2
+  },
+  {
+    topic: "Patent Protection",
+    question: "A patent provides its holder with:",
+    options: [
+      "Permanent and indefinite protection for a brand name or corporate logo",
+      "Strict confidentiality for a firm's internal business processes and formulas",
+      "Exclusive legal rights to make, use, or sell an invention for a limited period",
+      "A license for a franchisee to operate under a parent company's brand"
+    ],
+    answer: 2
+  },
+  {
+    topic: "Non-Strategic Resource",
+    question: "A resource is considered non-strategic when it:",
+    options: [
+      "Is extremely rare and cannot realistically be imitated by any competitor",
+      "Creates significant value and competitive advantage for the firm",
+      "Fails to meet one or more criteria of the VRIO framework",
+      "Is protected by a government-issued intellectual property patent"
+    ],
+    answer: 2
+  },
+  {
+    topic: "Organizational Performance",
+    question: "Organizational performance is most meaningfully assessed by:",
+    options: [
+      "The total number of full-time employees currently on the payroll",
+      "The founding year and historical age of the organization",
+      "The degree to which the organization achieves its stated goals and objectives",
+      "The total volume of goods physically produced per calendar quarter"
+    ],
+    answer: 2
+  },
+  {
+    topic: "Resource Rarity",
+    question: "In the VRIO framework, 'rarity' refers to a resource that:",
+    options: [
+      "Generates high financial returns regardless of competitive conditions",
+      "Is not possessed by many competing firms in the industry",
+      "Cannot be substituted by any other resource or alternative",
+      "Is extremely difficult to transfer or redeploy across organizational boundaries"
+    ],
+    answer: 1
+  },
+  {
+    topic: "Strategic Ploy",
+    question: "A strategic ploy is best described as:",
+    options: [
+      "A comprehensive long-term plan for expanding into new geographic markets",
+      "A specific action or signal designed to gain a tactical advantage over rivals",
+      "A structured method for systematically reducing operational overhead costs",
+      "A formal framework for evaluating a firm's internal strategic capabilities"
+    ],
+    answer: 1
+  },
+  {
+    topic: "Supplier Power",
+    question: "In Porter's Five Forces, high supplier power exists when:",
+    options: [
+      "There are many competing suppliers all offering similar commodity-like inputs",
+      "Buyers can easily and cheaply switch between multiple different suppliers",
+      "Suppliers can raise prices or reduce quality without losing the firm's business",
+      "The industry has very low or negligible barriers to entry for new firms"
+    ],
+    answer: 2
+  },
+  {
+    topic: "Balanced Scorecard",
+    question: "The balanced scorecard framework evaluates organizational performance across which four perspectives?",
+    options: [
+      "Revenue, cost, profit, and total market share",
+      "Mission, vision, core values, and competitive strategy",
+      "Financial, customer, internal business processes, and learning & growth",
+      "Political, economic, social, and technological environmental forces"
+    ],
+    answer: 2
+  },
+  {
+    topic: "Valuable Resource",
+    question: "In the VRIO framework, a resource is considered 'valuable' when it:",
+    options: [
+      "Is rare and held exclusively by only one competing firm in the industry",
+      "Enables a firm to exploit market opportunities or neutralize competitive threats",
+      "Is formally protected by a legally enforceable patent or trademark",
+      "Has been continuously held and used by the firm for more than ten years"
+    ],
+    answer: 1
+  },
+  {
+    topic: "Trademark Examples",
+    question: "Which of the following is the best example of a trademark?",
+    options: [
+      "A confidential manufacturing process kept as an internal trade secret",
+      "A government-granted patent awarded for a novel pharmaceutical compound",
+      "The Nike 'swoosh' logo registered with the U.S. Patent and Trademark Office",
+      "A proprietary software algorithm stored securely on encrypted servers"
+    ],
+    answer: 2
+  },
+  {
+    topic: "Political Factors",
+    question: "Which of the following represents a political factor in PESTEL analysis?",
+    options: [
+      "A surge in consumer interest in ethically sourced and sustainable products",
+      "A significant rise in the national unemployment rate",
+      "The enactment of new import tariffs by a national government",
+      "A major scientific breakthrough in renewable energy technology"
+    ],
+    answer: 2
+  },
+  {
+    topic: "Inbound Logistics",
+    question: "In Porter's value chain model, inbound logistics refers to:",
+    options: [
+      "Marketing and sales activities directed outward toward end customers",
+      "After-sale service and support provided to existing customers",
+      "Activities related to receiving, warehousing, and managing production inputs",
+      "The development of technology systems to support internal operations"
+    ],
+    answer: 2
+  },
+  {
+    topic: "Macro Environment",
+    question: "The macro environment refers to:",
+    options: [
+      "The specific competitive forces operating within a particular industry",
+      "The internal capabilities, resources, and competencies of a single firm",
+      "The broad set of external forces (political, economic, social, etc.) that affect all organizations",
+      "The direct competitive interactions between established industry rivals"
+    ],
+    answer: 2
+  },
+  {
+    topic: "Economies of Scale",
+    question: "Economies of scale occur when:",
+    options: [
+      "A firm diversifies into multiple unrelated business areas simultaneously",
+      "The average cost per unit decreases as production volume increases",
+      "A firm reduces its workforce to aggressively cut fixed overhead costs",
+      "A company narrows its entire product portfolio down to a single core offering"
+    ],
+    answer: 1
+  },
+  {
+    topic: "Economic Factors",
+    question: "Which of the following is an economic factor in PESTEL analysis?",
+    options: [
+      "Cultural attitudes and shifting social norms toward environmental responsibility",
+      "Government workplace safety regulations and compliance requirements",
+      "Changes in interest rates, inflation levels, and overall economic growth",
+      "Technological advances in machine learning and artificial intelligence"
+    ],
+    answer: 2
+  },
+  {
+    topic: "Industry Profit Potential",
+    question: "According to Porter's Five Forces, industry profit potential tends to be highest when:",
+    options: [
+      "Competitive rivalry is intense and buyers possess high bargaining power",
+      "Entry barriers are low and suppliers are highly fragmented",
+      "All five forces are weak, creating favorable conditions for incumbent firms",
+      "Many substitute products are readily available at lower market prices"
+    ],
+    answer: 2
+  },
+  {
+    topic: "Economies of Scale Concept",
+    question: "The concept of economies of scale is most directly leveraged by which competitive strategy?",
+    options: [
+      "Differentiation strategy, because unique products justify premium prices",
+      "Focus strategy, because serving a niche market reduces overhead",
+      "Cost leadership strategy, because higher volume lowers per-unit production costs",
+      "Blue ocean strategy, because uncontested markets eliminate rivalry"
+    ],
+    answer: 2
+  },
+  {
+    topic: "Value Chain",
+    question: "Porter's value chain is best described as:",
+    options: [
+      "A model for assessing the relative bargaining power of buyers and suppliers",
+      "A framework showing how a firm's activities create value and competitive advantage",
+      "A tool for analyzing the macro-environmental forces that affect an organization",
+      "A method for calculating a firm's total shareholder return over time"
+    ],
+    answer: 1
+  },
+  {
+    topic: "Porter's Five Forces",
+    question: "Which of the following is NOT one of Porter's Five Forces?",
+    options: [
+      "Threat of substitute products or services",
+      "Bargaining power of buyers",
+      "Economies of scale",
+      "Competitive rivalry among existing firms"
+    ],
+    answer: 2
+  },
+  {
+    topic: "Vision Statement",
+    question: "A vision statement differs from a mission statement primarily in that it:",
+    options: [
+      "Describes the current core purpose and organizational identity of the firm",
+      "Focuses on the specific tactics and pricing used to compete in the market",
+      "Articulates an aspirational future state the organization seeks to achieve",
+      "Lists the specific financial performance targets for the next fiscal year"
+    ],
+    answer: 2
+  },
+  {
+    topic: "Industry Entry Barriers",
+    question: "High barriers to industry entry primarily benefit existing firms because they:",
+    options: [
+      "Force incumbents to continuously lower their prices to remain competitive",
+      "Limit the threat of new competitors entering and eroding profits",
+      "Increase the overall bargaining power of customers in the market",
+      "Systematically reduce the cost of raw materials for established producers"
+    ],
+    answer: 1
+  },
+  {
+    topic: "Supply Chain Failure",
+    question: "A supply chain failure is most likely to occur when:",
+    options: [
+      "A firm has too many competing suppliers aggressively bidding for its business",
+      "Consumer demand unexpectedly drops far below originally forecast levels",
+      "A firm relies heavily on a single supplier that experiences a major disruption",
+      "Economies of scale enable significantly lower unit production costs"
+    ],
+    answer: 2
+  },
+  {
+    topic: "Cost Leadership Advantage",
+    question: "The primary competitive advantage of a cost leadership strategy is that it:",
+    options: [
+      "Allows the firm to offer uniquely differentiated and distinctive products",
+      "Enables the firm to serve a highly specialized niche more effectively than rivals",
+      "Allows the firm to undercut rivals on price or earn higher margins at market price",
+      "Builds strong brand loyalty based entirely on perceived superior quality"
+    ],
+    answer: 2
+  },
+  {
+    topic: "Business Model Viability",
+    question: "Business model viability refers to:",
+    options: [
+      "The legal compliance of a firm's business practices under applicable regulations",
+      "Whether a firm's approach to creating and capturing value is financially sustainable",
+      "The ability of a firm to consistently attract and retain top-tier talent",
+      "The degree to which a firm's operations comply with environmental standards"
+    ],
+    answer: 1
+  },
+  {
+    topic: "Advertising Minimization",
+    question: "In the context of cost leadership strategy, advertising minimization refers to:",
+    options: [
+      "The practice of reducing promotional spending to keep overall operating costs low",
+      "A legal prohibition on certain deceptive types of advertising",
+      "The complete elimination of all marketing to focus solely on production",
+      "A strategy of using only social media instead of paid traditional advertising"
+    ],
+    answer: 0
+  },
+  {
+    topic: "Cost Leadership",
+    question: "A firm that pursues a cost leadership strategy seeks to:",
+    options: [
+      "Offer the most technologically innovative products in the entire market",
+      "Serve exclusively a narrow geographic or demographic region",
+      "Become the lowest-cost producer in its industry",
+      "Build brand equity through premium product positioning and exclusive distribution"
+    ],
+    answer: 2
+  },
+  {
+    topic: "Measurable Goals",
+    question: "Measurable goals are important in strategic management primarily because they:",
+    options: [
+      "Ensure that every employee is held to exactly identical performance standards",
+      "Allow the organization to quantify progress and assess whether objectives are being met",
+      "Completely eliminate the need for any qualitative performance assessments",
+      "Guarantee that the organization will ultimately achieve its long-term strategic vision"
+    ],
+    answer: 1
+  }
+];
+
+/* ─────────────── UTILS ─────────────── */
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function pickQuestions(bank, n = 20) {
+  return shuffle(bank).slice(0, n);
+}
+
+function getGrade(pct) {
+  if (pct >= 90) return 'A';
+  if (pct >= 80) return 'B';
+  if (pct >= 70) return 'C';
+  if (pct >= 60) return 'D';
+  return 'F';
+}
+
+function getEncouragement(pct) {
+  if (pct === 100) return "Perfect score! You've mastered Strategic Management. Outstanding work!";
+  if (pct >= 90)  return "Excellent performance! You have a strong command of the material.";
+  if (pct >= 80)  return "Great job! You're well-prepared for the exam with just a bit more review.";
+  if (pct >= 70)  return "Good effort! Focus on the topics you missed and you'll do well on exam day.";
+  if (pct >= 60)  return "You're on the right track — review the highlighted concepts and try again!";
+  return "Keep studying! Use this review to target your weak areas and come back stronger.";
+}
+
+const LETTERS = ['A', 'B', 'C', 'D'];
+
+/* ─────────────── SCREEN: START ─────────────── */
+function StartScreen({ onStart }) {
+  return (
+    <div className="card start-screen">
+      <div className="badge">Strategic Management · Midterm Prep</div>
+      <h2>Ready to Test Your Knowledge?</h2>
+      <p>
+        Each quiz draws <strong>20 random questions</strong> from a bank of{' '}
+        <strong>50 topics</strong> covering your full study guide — strategy frameworks,
+        PESTEL, Porter's Five Forces, VRIO, value chain, and more.
+      </p>
+      <div className="info-grid">
+        <div className="info-card">
+          <div className="val">50</div>
+          <div className="lbl">Total Questions</div>
+        </div>
+        <div className="info-card">
+          <div className="val">20</div>
+          <div className="lbl">Per Quiz Attempt</div>
+        </div>
+        <div className="info-card">
+          <div className="val">A–F</div>
+          <div className="lbl">Letter Grade</div>
+        </div>
+      </div>
+      <button className="btn btn-primary" style={{ width: '100%', fontSize: '1.05rem', padding: '.85rem' }} onClick={onStart}>
+        Start Quiz →
+      </button>
+    </div>
+  );
+}
+
+/* ─────────────── SCREEN: QUIZ ─────────────── */
+function QuizScreen({ questions, onFinish }) {
+  const [current, setCurrent]   = useState(0);
+  const [selected, setSelected] = useState(null);
+  const [confirmed, setConfirmed] = useState(false);
+  const [answers, setAnswers]   = useState([]);
+
+  const q = questions[current];
+  const total = questions.length;
+  const progress = confirmed ? ((current + 1) / total) * 100 : (current / total) * 100;
+
+  function handleSelect(idx) {
+    if (!confirmed) setSelected(idx);
+  }
+
+  function handleConfirm() {
+    if (selected === null) return;
+    setConfirmed(true);
+  }
+
+  function handleNext() {
+    const newAnswers = [...answers, { selected, correct: q.answer }];
+    if (current + 1 < total) {
+      setAnswers(newAnswers);
+      setCurrent(current + 1);
+      setSelected(null);
+      setConfirmed(false);
+    } else {
+      onFinish(newAnswers);
+    }
+  }
+
+  const isCorrect = confirmed && selected === q.answer;
+
+  function optionClass(idx) {
+    if (!confirmed) return selected === idx ? 'option-btn selected' : 'option-btn';
+    if (idx === q.answer) return 'option-btn reveal-correct';
+    if (idx === selected && selected !== q.answer) return 'option-btn incorrect';
+    return 'option-btn';
+  }
+
+  return (
+    <div className="card">
+      {/* Progress */}
+      <div className="progress-wrap">
+        <div className="progress-meta">
+          <span>Question {current + 1} of {total}</span>
+          <span>{Math.round(progress)}% complete</span>
+        </div>
+        <div className="progress-track">
+          <div className="progress-fill" style={{ width: `${progress}%` }} />
+        </div>
+      </div>
+
+      {/* Topic chip */}
+      <div className="question-topic">{q.topic}</div>
+
+      {/* Question */}
+      <p className="question-text">{q.question}</p>
+
+      {/* Options */}
+      <div className="options">
+        {q.options.map((opt, idx) => (
+          <button
+            key={idx}
+            className={optionClass(idx)}
+            onClick={() => handleSelect(idx)}
+            disabled={confirmed}
+          >
+            <span className="option-letter">{LETTERS[idx]}</span>
+            <span>{opt}</span>
+          </button>
+        ))}
+      </div>
+
+      {/* Feedback */}
+      {confirmed && (
+        <div className={`feedback ${isCorrect ? 'correct' : 'incorrect'}`}>
+          <span className="feedback-icon">{isCorrect ? '✓' : '✗'}</span>
+          <span>
+            {isCorrect
+              ? 'Correct! Well done.'
+              : `Incorrect. The correct answer is ${LETTERS[q.answer]}: ${q.options[q.answer]}`}
+          </span>
+        </div>
+      )}
+
+      {/* Action buttons */}
+      <div className="btn-row">
+        {!confirmed ? (
+          <button
+            className="btn btn-primary"
+            onClick={handleConfirm}
+            disabled={selected === null}
+          >
+            Confirm Answer
+          </button>
+        ) : (
+          <button className="btn btn-primary" onClick={handleNext}>
+            {current + 1 < total ? 'Next Question →' : 'See Results →'}
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────── SCREEN: RESULTS ─────────────── */
+function ResultsScreen({ questions, answers, onRetake, onReview }) {
+  const score = answers.filter(a => a.selected === a.correct).length;
+  const total = answers.length;
+  const pct   = Math.round((score / total) * 100);
+  const grade = getGrade(pct);
+  const encouragement = getEncouragement(pct);
+
+  // SVG ring
+  const radius = 54;
+  const circ   = 2 * Math.PI * radius;
+  const dash   = (pct / 100) * circ;
+
+  return (
+    <div className="card results-screen">
+      <h2 style={{ fontSize: '1.5rem', color: '#f1f5f9', marginBottom: '1.25rem' }}>Quiz Results</h2>
+
+      {/* Score ring */}
+      <div className="score-ring">
+        <svg width="140" height="140" viewBox="0 0 140 140">
+          <circle cx="70" cy="70" r={radius} fill="none" stroke="#1e293b" strokeWidth="12" />
+          <circle
+            cx="70" cy="70" r={radius}
+            fill="none"
+            stroke="url(#ringGrad)"
+            strokeWidth="12"
+            strokeDasharray={`${dash} ${circ}`}
+            strokeLinecap="round"
+          />
+          <defs>
+            <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#22d3ee" />
+              <stop offset="100%" stopColor="#a78bfa" />
+            </linearGradient>
+          </defs>
+        </svg>
+        <div className="score-ring-text">
+          <span className="big">{score}/{total}</span>
+          <span className="sub">{pct}%</span>
+        </div>
+      </div>
+
+      {/* Grade badge */}
+      <div className={`grade-badge grade-${grade}`}>Grade: {grade}</div>
+
+      {/* Encouragement */}
+      <p className="encourage">{encouragement}</p>
+
+      {/* Breakdown */}
+      <div style={{ display: 'flex', justifyContent: 'center', gap: '2rem', marginBottom: '1.8rem', fontFamily: "'Helvetica Neue', sans-serif", fontSize: '.9rem' }}>
+        <span style={{ color: '#4ade80' }}>✓ {score} Correct</span>
+        <span style={{ color: '#f87171' }}>✗ {total - score} Incorrect</span>
+      </div>
+
+      <div className="results-btns">
+        <button className="btn btn-primary" onClick={onReview}>Review Answers</button>
+        <button className="btn btn-secondary" onClick={onRetake}>Retake Quiz (New Questions)</button>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────── SCREEN: REVIEW ─────────────── */
+function ReviewScreen({ questions, answers, onRetake }) {
+  const [idx, setIdx] = useState(0);
+  const total = questions.length;
+  const q     = questions[idx];
+  const a     = answers[idx];
+  const wasCorrect = a.selected === a.correct;
+
+  function optionClass(i) {
+    if (i === a.correct && i === a.selected) return 'option-btn correct';
+    if (i === a.correct) return 'option-btn reveal-correct';
+    if (i === a.selected) return 'option-btn incorrect';
+    return 'option-btn';
+  }
+
+  return (
+    <div className="card">
+      <div className="review-header">
+        <h2>Review Answers</h2>
+        <div className="review-nav">
+          <span className="review-counter">{idx + 1} / {total}</span>
+          <button className="btn btn-secondary" style={{ padding: '.4rem .9rem', fontSize: '.85rem' }} onClick={() => setIdx(Math.max(0, idx - 1))} disabled={idx === 0}>← Prev</button>
+          <button className="btn btn-secondary" style={{ padding: '.4rem .9rem', fontSize: '.85rem' }} onClick={() => setIdx(Math.min(total - 1, idx + 1))} disabled={idx === total - 1}>Next →</button>
+        </div>
+      </div>
+
+      <div className={`review-status ${wasCorrect ? 'correct' : 'incorrect'}`}>
+        {wasCorrect ? '✓ Correct' : '✗ Incorrect'}
+      </div>
+
+      <div className="question-topic">{q.topic}</div>
+      <p className="question-text">{q.question}</p>
+
+      <div className="options">
+        {q.options.map((opt, i) => (
+          <button key={i} className={optionClass(i)} disabled>
+            <span className="option-letter">{LETTERS[i]}</span>
+            <span>
+              {opt}
+              {i === a.selected && i !== a.correct && <span style={{ fontFamily: "'Helvetica Neue', sans-serif", fontSize: '.8rem', marginLeft: '.4rem', opacity: .8 }}>(your answer)</span>}
+              {i === a.correct && <span style={{ fontFamily: "'Helvetica Neue', sans-serif", fontSize: '.8rem', marginLeft: '.4rem', opacity: .8 }}>(correct answer)</span>}
+            </span>
+          </button>
+        ))}
+      </div>
+
+      <div className="divider" />
+      <div className="btn-row">
+        <button className="btn btn-secondary" onClick={onRetake}>Retake Quiz</button>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────── APP ROOT ─────────────── */
+function App() {
+  const [screen, setScreen]       = useState('start');  // start | quiz | results | review
+  const [questions, setQuestions] = useState([]);
+  const [answers, setAnswers]     = useState([]);
+
+  function startQuiz() {
+    setQuestions(pickQuestions(QUESTION_BANK, 20));
+    setAnswers([]);
+    setScreen('quiz');
+  }
+
+  function handleFinish(finalAnswers) {
+    setAnswers(finalAnswers);
+    setScreen('results');
+  }
+
+  function handleRetake() {
+    startQuiz();
+  }
+
+  function handleReview() {
+    setScreen('review');
+  }
+
+  return (
+    <div>
+      <div className="app-header">
+        <h1>Strategic Management Midterm Quiz</h1>
+        <p>50-question bank · 20 questions per attempt · Randomized each time</p>
+      </div>
+
+      {screen === 'start'   && <StartScreen onStart={startQuiz} />}
+      {screen === 'quiz'    && <QuizScreen questions={questions} onFinish={handleFinish} />}
+      {screen === 'results' && <ResultsScreen questions={questions} answers={answers} onRetake={handleRetake} onReview={handleReview} />}
+      {screen === 'review'  && <ReviewScreen questions={questions} answers={answers} onRetake={handleRetake} />}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

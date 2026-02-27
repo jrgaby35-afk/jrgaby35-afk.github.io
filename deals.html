@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PriceHunt — Find the Best Deal on Anything</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #08080e;
+      --bg-2:        #0f0f1a;
+      --card:        rgba(255,255,255,.04);
+      --card-h:      rgba(255,255,255,.072);
+      --border:      rgba(255,255,255,.08);
+      --border-h:    rgba(255,255,255,.18);
+      --text:        #f2f2f7;
+      --text-2:      #8e8ea0;
+      --text-3:      #44445a;
+      --accent:      #5c6ef0;
+      --accent-2:    #7b8af8;
+      --green:       #30d158;
+      --gold:        #ffd60a;
+      --silver:      #c5c5c7;
+      --bronze:      #c96d2e;
+      --orange:      #ff9f0a;
+      --r:           16px;
+      --r-lg:        22px;
+      --font: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+              "Helvetica Neue", Arial, sans-serif;
+      --shadow: 0 8px 40px rgba(0,0,0,.45);
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ─── Background glow ──────────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 90% 55% at 50% -5%, rgba(92,110,240,.13) 0%, transparent 60%),
+        radial-gradient(ellipse 45% 35% at 90% 65%, rgba(139,92,246,.07) 0%, transparent 55%),
+        radial-gradient(ellipse 40% 35% at 8%  80%, rgba(6,182,212,.05)  0%, transparent 55%);
+    }
+
+    /* ─── Nav ──────────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      height: 54px;
+      background: rgba(8,8,14,.78);
+      backdrop-filter: saturate(180%) blur(22px);
+      -webkit-backdrop-filter: saturate(180%) blur(22px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 28px;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-icon {
+      width: 30px; height: 30px; border-radius: 9px;
+      background: linear-gradient(135deg, #5c6ef0 0%, #8b5cf6 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; box-shadow: 0 2px 12px rgba(92,110,240,.45);
+    }
+    .nav-name { font-size: 17px; font-weight: 700; letter-spacing: -.02em; color: var(--text); }
+    .nav-name em { font-style: normal; color: var(--accent-2); }
+    .nav-pill {
+      background: rgba(92,110,240,.14); border: 1px solid rgba(92,110,240,.28);
+      border-radius: 20px; padding: 4px 13px;
+      font-size: 12px; color: var(--accent-2); font-weight: 600;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .pulse-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--green); box-shadow: 0 0 6px var(--green);
+      animation: pulseAnim 2s infinite;
+    }
+    @keyframes pulseAnim {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:.5; transform:scale(.75); }
+    }
+
+    /* ─── Main wrapper ─────────────────────────────────────────── */
+    main { position: relative; z-index: 1; padding-top: 54px; }
+
+    /* ─── Hero ─────────────────────────────────────────────────── */
+    .hero {
+      padding: 84px 24px 56px;
+      text-align: center;
+      max-width: 780px; margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(92,110,240,.12); border: 1px solid rgba(92,110,240,.24);
+      border-radius: 20px; padding: 6px 16px;
+      font-size: 13px; color: var(--accent-2); margin-bottom: 30px;
+      animation: fadeUp .5s ease both;
+    }
+
+    .hero h1 {
+      font-size: clamp(38px, 7.5vw, 78px);
+      font-weight: 800; letter-spacing: -.045em; line-height: 1.03;
+      margin-bottom: 20px;
+      animation: fadeUp .5s .08s ease both;
+    }
+    .hero h1 .grad {
+      background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 45%, #8b5cf6 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 18px; color: var(--text-2); line-height: 1.65;
+      margin-bottom: 40px;
+      animation: fadeUp .5s .16s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(18px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* ─── Search bar ───────────────────────────────────────────── */
+    .search-wrap {
+      max-width: 680px; margin: 0 auto;
+      animation: fadeUp .5s .24s ease both;
+    }
+
+    .search-box {
+      display: flex; align-items: center; gap: 12px;
+      background: rgba(255,255,255,.055);
+      border: 1.5px solid rgba(255,255,255,.11);
+      border-radius: 20px; padding: 7px 7px 7px 20px;
+      transition: border-color .2s, box-shadow .2s, background .2s;
+    }
+    .search-box:focus-within {
+      border-color: rgba(92,110,240,.65);
+      background: rgba(255,255,255,.075);
+      box-shadow: 0 0 0 4px rgba(92,110,240,.13), 0 8px 32px rgba(0,0,0,.4);
+    }
+    .search-ico {
+      flex-shrink: 0; display: flex; align-items: center; color: var(--text-3);
+    }
+    .search-ico svg { width:18px; height:18px; stroke:currentColor; fill:none;
+                      stroke-linecap:round; stroke-linejoin:round; stroke-width:2; }
+    #q {
+      flex: 1; background: none; border: none; outline: none;
+      font-family: var(--font); font-size: 17px; color: var(--text);
+      caret-color: var(--accent-2); padding: 10px 0;
+    }
+    #q::placeholder { color: var(--text-3); }
+
+    .search-btn {
+      flex-shrink: 0;
+      background: linear-gradient(135deg, #5c6ef0 0%, #8b5cf6 100%);
+      color: #fff; border: none; cursor: pointer;
+      font-family: var(--font); font-size: 15px; font-weight: 600;
+      padding: 13px 26px; border-radius: 13px;
+      display: flex; align-items: center; gap: 8px;
+      transition: transform .14s, box-shadow .2s;
+      white-space: nowrap;
+      box-shadow: 0 3px 14px rgba(92,110,240,.4);
+    }
+    .search-btn:hover { transform: scale(1.025); box-shadow: 0 5px 22px rgba(92,110,240,.55); }
+    .search-btn:active { transform: scale(.975); }
+    .search-btn svg { width:15px; height:15px; stroke:#fff; fill:none;
+                      stroke-linecap:round; stroke-linejoin:round; stroke-width:2.5; }
+
+    /* ─── Quick categories ─────────────────────────────────────── */
+    .quick-row {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      justify-content: center; margin-top: 16px;
+      animation: fadeUp .5s .32s ease both;
+    }
+    .q-chip {
+      background: rgba(255,255,255,.05); border: 1px solid var(--border);
+      border-radius: 20px; padding: 6px 15px;
+      font-size: 13px; color: var(--text-2); cursor: pointer;
+      display: flex; align-items: center; gap: 6px;
+      transition: background .15s, color .15s, border-color .15s, transform .12s;
+    }
+    .q-chip:hover {
+      background: rgba(92,110,240,.1); color: var(--accent-2);
+      border-color: rgba(92,110,240,.3); transform: translateY(-1px);
+    }
+
+    /* ─── Feature grid (shown when idle) ──────────────────────── */
+    .feature-section {
+      max-width: 900px; margin: 0 auto; padding: 0 24px 80px;
+    }
+    .feature-eyebrow {
+      text-align: center; font-size: 12px; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase; color: var(--accent-2);
+      margin-bottom: 28px;
+      animation: fadeUp .5s .4s ease both;
+    }
+    .feature-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+      animation: fadeUp .5s .46s ease both;
+    }
+    .feat-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--r-lg); padding: 26px 24px;
+      transition: background .2s, border-color .2s, transform .2s;
+    }
+    .feat-card:hover { background: var(--card-h); border-color: var(--border-h); transform: translateY(-3px); }
+    .feat-icon { font-size: 26px; margin-bottom: 14px; }
+    .feat-title { font-size: 16px; font-weight: 700; letter-spacing: -.01em; margin-bottom: 8px; }
+    .feat-desc { font-size: 14px; color: var(--text-2); line-height: 1.55; }
+    .feat-retailers { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 5px; }
+    .feat-tag {
+      background: rgba(255,255,255,.06); border: 1px solid var(--border);
+      border-radius: 6px; padding: 2px 8px;
+      font-size: 11px; color: var(--text-3); font-weight: 500;
+    }
+
+    /* ─── Results section ──────────────────────────────────────── */
+    .results-section { max-width: 900px; margin: 0 auto; padding: 0 24px 80px; }
+
+    /* Header */
+    .results-hdr {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 18px; padding: 0 2px;
+    }
+    .results-hdr-title { font-size: 22px; font-weight: 700; letter-spacing: -.02em; }
+    .results-hdr-title span { color: var(--text-2); font-weight: 400; font-size: 17px; }
+    .live-badge {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 12px; color: var(--green); font-weight: 600;
+    }
+    .live-dot {
+      width: 7px; height: 7px; border-radius: 50%; background: var(--green);
+      box-shadow: 0 0 7px var(--green); animation: pulseAnim 1.8s infinite;
+    }
+
+    /* Category banner */
+    .cat-banner {
+      display: flex; align-items: center; gap: 14px;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 16px 20px;
+      margin-bottom: 18px;
+    }
+    .cat-banner .ci { font-size: 26px; }
+    .cat-banner .cl { font-size: 11px; color: var(--text-3); font-weight: 700;
+                      text-transform: uppercase; letter-spacing: .07em; }
+    .cat-banner .cn { font-size: 17px; font-weight: 700; margin-top: 2px; }
+    .cat-tip {
+      margin-left: auto; font-size: 12px; color: var(--text-3);
+      text-align: right; line-height: 1.5; max-width: 230px;
+    }
+    .cat-tip strong { color: var(--text-2); font-weight: 600; }
+
+    /* Stats */
+    .stats-row {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+      margin-bottom: 20px;
+    }
+    .stat-box {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 16px;
+      text-align: center;
+    }
+    .stat-num { font-size: 22px; font-weight: 800; letter-spacing: -.04em; color: var(--text); }
+    .stat-lbl { font-size: 11px; color: var(--text-3); margin-top: 3px; font-weight: 500; }
+
+    /* Cards list */
+    .cards-list { display: flex; flex-direction: column; gap: 12px; }
+
+    /* ─── Result card ──────────────────────────────────────────── */
+    .r-card {
+      position: relative; overflow: hidden;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--r-lg); padding: 22px 24px 22px 30px;
+      display: grid; grid-template-columns: 36px 52px 1fr auto;
+      gap: 16px 18px; align-items: center;
+      text-decoration: none; color: inherit;
+      transition: background .2s, border-color .2s, transform .22s, box-shadow .22s;
+    }
+    .r-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,.025) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .r-card:hover {
+      background: var(--card-h);
+      border-color: rgba(92,110,240,.35);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 36px rgba(0,0,0,.35), 0 0 0 1px rgba(92,110,240,.18);
+    }
+    .r-card.top {
+      border-color: rgba(48,209,88,.28);
+      background: rgba(48,209,88,.035);
+    }
+    .r-card.top:hover {
+      border-color: rgba(48,209,88,.45);
+      box-shadow: 0 10px 36px rgba(0,0,0,.35), 0 0 0 1px rgba(48,209,88,.22);
+    }
+
+    /* Rank column */
+    .r-rank {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 3px;
+    }
+    .r-rank-num {
+      font-size: 20px; font-weight: 800; letter-spacing: -.04em; line-height: 1;
+    }
+    .rank-1 .r-rank-num { color: var(--gold); text-shadow: 0 0 12px rgba(255,214,10,.5); }
+    .rank-2 .r-rank-num { color: var(--silver); }
+    .rank-3 .r-rank-num { color: var(--bronze); }
+    .rank-4 .r-rank-num, .rank-5 .r-rank-num { color: var(--text-3); font-size: 16px; }
+    .r-rank-crown { font-size: 11px; line-height: 1; }
+
+    /* Logo */
+    .r-logo {
+      width: 52px; height: 52px; border-radius: 14px;
+      background: rgba(255,255,255,.07); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; flex-shrink: 0;
+    }
+
+    /* Info */
+    .r-info { min-width: 0; }
+    .r-name {
+      font-size: 17px; font-weight: 700; letter-spacing: -.015em; margin-bottom: 3px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .best-tag {
+      background: rgba(48,209,88,.14); border: 1px solid rgba(48,209,88,.28);
+      border-radius: 20px; padding: 2px 9px;
+      font-size: 10px; font-weight: 800; color: var(--green);
+      letter-spacing: .06em; text-transform: uppercase;
+    }
+    .r-desc {
+      font-size: 13.5px; color: var(--text-2); line-height: 1.4; margin-bottom: 9px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .r-tags { display: flex; gap: 5px; flex-wrap: wrap; }
+    .r-tag {
+      background: rgba(255,255,255,.06); border: 1px solid var(--border);
+      border-radius: 6px; padding: 2px 8px;
+      font-size: 11px; color: var(--text-3); font-weight: 500;
+    }
+    .r-tag.g { background: rgba(48,209,88,.1);  border-color: rgba(48,209,88,.22); color: var(--green); }
+    .r-tag.b { background: rgba(92,110,240,.1);  border-color: rgba(92,110,240,.22); color: var(--accent-2); }
+    .r-tag.o { background: rgba(255,159,10,.1);  border-color: rgba(255,159,10,.22); color: var(--orange); }
+
+    /* Right column */
+    .r-right {
+      flex-shrink: 0; display: flex; flex-direction: column;
+      align-items: flex-end; gap: 10px;
+    }
+    .r-price-note { font-size: 12.5px; color: var(--text-2); text-align: right; }
+    .r-price-sub  { font-size: 11px; color: var(--text-3); margin-top: 2px; text-align: right; }
+    .r-cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(92,110,240,.14); border: 1px solid rgba(92,110,240,.28);
+      color: var(--accent-2); font-size: 13px; font-weight: 600;
+      padding: 9px 17px; border-radius: 10px;
+      transition: background .15s;
+      white-space: nowrap;
+    }
+    .r-cta svg { width:12px; height:12px; stroke:currentColor; fill:none;
+                 stroke-linecap:round; stroke-linejoin:round; stroke-width:2.5; }
+    .r-card:hover .r-cta { background: rgba(92,110,240,.26); }
+    .r-card.top .r-cta {
+      background: rgba(48,209,88,.12); border-color: rgba(48,209,88,.28);
+      color: var(--green);
+    }
+    .r-card.top:hover .r-cta { background: rgba(48,209,88,.22); }
+
+    /* ─── Skeleton loading ─────────────────────────────────────── */
+    .skel-card {
+      background: rgba(255,255,255,.025); border: 1px solid var(--border);
+      border-radius: var(--r-lg); padding: 22px 24px 22px 30px;
+      display: grid; grid-template-columns: 36px 52px 1fr 110px;
+      gap: 16px 18px; align-items: center;
+    }
+    .s {
+      border-radius: 8px;
+      background: linear-gradient(90deg,
+        rgba(255,255,255,.045) 0%,
+        rgba(255,255,255,.09)  50%,
+        rgba(255,255,255,.045) 100%);
+      background-size: 200% 100%;
+      animation: shimmer 1.6s infinite;
+    }
+    @keyframes shimmer {
+      from { background-position: 200% 0; }
+      to   { background-position: -200% 0; }
+    }
+    .s-sq { width:52px; height:52px; border-radius:14px; }
+    .s-sm { height:14px; }
+    .s-lg { height:18px; }
+
+    /* ─── Disclaimer ───────────────────────────────────────────── */
+    .disclaimer {
+      text-align: center; padding: 20px 24px 36px;
+      font-size: 12px; color: var(--text-3); line-height: 1.7;
+      border-top: 1px solid var(--border); max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* ─── Responsive ───────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .r-card { grid-template-columns: 32px 44px 1fr; grid-template-rows: auto auto; }
+      .r-right { grid-column: 1/-1; flex-direction: row; align-items: center; justify-content: space-between; }
+      .cat-tip { display: none; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: 1fr; gap: 8px; }
+      .hero h1 { font-size: 36px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── Nav ──────────────────────────────────────────────────── -->
+<nav>
+  <a href="#" class="nav-brand" onclick="resetView()">
+    <div class="nav-icon">🔍</div>
+    <div class="nav-name">Price<em>Hunt</em></div>
+  </a>
+  <div class="nav-pill">
+    <div class="pulse-dot"></div>
+    Live Deals
+  </div>
+</nav>
+
+<!-- ─── Main ─────────────────────────────────────────────────── -->
+<main>
+  <!-- Hero + Search -->
+  <div class="hero">
+    <div class="hero-badge">
+      <div class="pulse-dot"></div>
+      Comparing 50+ retailers across 12 categories
+    </div>
+    <h1>Find the <span class="grad">best price</span><br>on anything.</h1>
+    <p class="hero-sub">
+      Cars, shoes, electronics, tickets, firearms, clothes —<br>
+      search anything and instantly surface the top 5 deals.
+    </p>
+
+    <div class="search-wrap">
+      <div class="search-box">
+        <div class="search-ico">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <input id="q" type="text" autocomplete="off" autocorrect="off" spellcheck="false"
+               placeholder="Try: Nike Air Force 1, Ford F-150, Taylor Swift tickets, Glock 19…" />
+        <button class="search-btn" onclick="doSearch()">
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          Search
+        </button>
+      </div>
+
+      <div class="quick-row">
+        <button class="q-chip" onclick="qs('Nike Air Force 1 White')">👟 Sneakers</button>
+        <button class="q-chip" onclick="qs('Ford F-150 Lariat')">🚗 Cars</button>
+        <button class="q-chip" onclick="qs('Taylor Swift Eras Tour tickets')">🎟️ Tickets</button>
+        <button class="q-chip" onclick="qs('iPhone 16 Pro 256GB')">📱 Electronics</button>
+        <button class="q-chip" onclick="qs('Glock 19 Gen 5')">🎯 Firearms</button>
+        <button class="q-chip" onclick="qs('Levi\'s 501 Jeans')">👖 Clothing</button>
+        <button class="q-chip" onclick="qs('PS5 Slim')">🎮 Gaming</button>
+        <button class="q-chip" onclick="qs('Diamond engagement ring 1 carat')">💍 Jewelry</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Feature grid (idle state) -->
+  <div class="feature-section" id="featureSection">
+    <div class="feature-eyebrow">Everything. Everywhere. Best Price.</div>
+    <div class="feature-grid">
+      <div class="feat-card">
+        <div class="feat-icon">🚗</div>
+        <div class="feat-title">Vehicles</div>
+        <div class="feat-desc">Cars, trucks, SUVs, motorcycles — new and used across all major auto platforms.</div>
+        <div class="feat-retailers">
+          <span class="feat-tag">CarGurus</span><span class="feat-tag">AutoTrader</span>
+          <span class="feat-tag">Carvana</span><span class="feat-tag">Edmunds</span>
+        </div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">📱</div>
+        <div class="feat-title">Electronics</div>
+        <div class="feat-desc">Phones, laptops, TVs, cameras, and every gadget imaginable at the lowest prices.</div>
+        <div class="feat-retailers">
+          <span class="feat-tag">Amazon</span><span class="feat-tag">Best Buy</span>
+          <span class="feat-tag">Newegg</span><span class="feat-tag">B&H</span>
+        </div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🎟️</div>
+        <div class="feat-title">Tickets</div>
+        <div class="feat-desc">Concerts, sports, Broadway, festivals — find seats with zero-fee options.</div>
+        <div class="feat-retailers">
+          <span class="feat-tag">TickPick</span><span class="feat-tag">StubHub</span>
+          <span class="feat-tag">SeatGeek</span><span class="feat-tag">Vivid Seats</span>
+        </div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">👟</div>
+        <div class="feat-title">Shoes & Sneakers</div>
+        <div class="feat-desc">Live resale market prices, authenticated pairs, and retail — find your size for less.</div>
+        <div class="feat-retailers">
+          <span class="feat-tag">StockX</span><span class="feat-tag">GOAT</span>
+          <span class="feat-tag">Foot Locker</span><span class="feat-tag">Nike</span>
+        </div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🎯</div>
+        <div class="feat-title">Firearms</div>
+        <div class="feat-desc">Handguns, rifles, shotguns, and accessories — compare the top licensed dealers.</div>
+        <div class="feat-retailers">
+          <span class="feat-tag">GunBroker</span><span class="feat-tag">PSA</span>
+          <span class="feat-tag">Bud's</span><span class="feat-tag">GrabAGun</span>
+        </div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">💎</div>
+        <div class="feat-title">Jewelry & More</div>
+        <div class="feat-desc">Clothing, jewelry, furniture, tools, sports gear — if you can buy it, we cover it.</div>
+        <div class="feat-retailers">
+          <span class="feat-tag">James Allen</span><span class="feat-tag">ASOS</span>
+          <span class="feat-tag">Wayfair</span><span class="feat-tag">Home Depot</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results (hidden initially) -->
+  <div class="results-section" id="resultsSection" style="display:none;"></div>
+</main>
+
+<div class="disclaimer" id="disclaimer" style="display:none;">
+  PriceHunt links directly to each retailer's live search results — prices are confirmed the moment you click.
+  We don't collect or store your searches. All firearm purchases require FFL dealer transfer per federal law.
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   RETAILER DATA
+═══════════════════════════════════════════════════════════════ */
+const R = {
+  general: [
+    { name:'Amazon',         icon:'📦', url:q=>`https://www.amazon.com/s?k=${enc(q)}`,                                               strength:'Largest selection + fast Prime shipping',  note:'Check lightning deals', tags:['Prime Eligible','Free Returns'],       tc:['b','g'] },
+    { name:'eBay',           icon:'🏷️', url:q=>`https://www.ebay.com/sch/i.html?_nkw=${enc(q)}&_sop=15`,                            strength:'New, used & rare — often the lowest prices', note:'New & used available',  tags:['Best Price','Auction & Buy Now'],    tc:['g','o'] },
+    { name:'Walmart',        icon:'🔵', url:q=>`https://www.walmart.com/search?q=${enc(q)}&sort=price_low`,                          strength:'Competitive pricing + in-store pickup',    note:'Price match guarantee', tags:['Rollback Deals','Free Pickup'],       tc:['o','g'] },
+    { name:'Google Shopping',icon:'🛒', url:q=>`https://www.google.com/search?tbm=shop&q=${enc(q)}&tbs=sst:1`,                       strength:'Aggregates prices across every major store', note:'All retailers compared', tags:['Price Comparison','Every Store'],    tc:['b','']  },
+    { name:'Target',         icon:'🎯', url:q=>`https://www.target.com/s?searchTerm=${enc(q)}`,                                       strength:'RedCard saves 5% on every purchase',        note:'RedCard = 5% off',      tags:['Circle Deals','Same-Day Delivery'],  tc:['o','g'] },
+  ],
+  electronics: [
+    { name:'Amazon',    icon:'📦', url:q=>`https://www.amazon.com/s?k=${enc(q)}&rh=n%3A172282`,                                                   strength:'Widest electronics selection + lightning deals', note:'Check lightning deals',   tags:['Prime Eligible','Lightning Deals'], tc:['b','o'] },
+    { name:'Best Buy',  icon:'💙', url:q=>`https://www.bestbuy.com/site/searchpage.jsp?st=${enc(q)}`,                                              strength:'Price match + in-store Geek Squad support',     note:'Price match guarantee',  tags:['Price Match','Store Pickup'],       tc:['b','g'] },
+    { name:'Newegg',    icon:'🥚', url:q=>`https://www.newegg.com/p/pl?d=${enc(q)}&Order=1`,                                                       strength:'Best for PC components & tech peripherals',     note:'Shell Shocker flash deals', tags:['Tech Focused','Flash Sales'],      tc:['o','g'] },
+    { name:'B&H Photo', icon:'📷', url:q=>`https://www.bhphotovideo.com/c/search?q=${enc(q)}`,                                                     strength:'Pro cameras, AV, and studio gear',              note:'Often no sales tax',     tags:['Pro Grade','No Sales Tax*'],        tc:['b','g'] },
+    { name:'Costco',    icon:'🏪', url:q=>`https://www.costco.com/s?keyword=${enc(q)}`,                                                             strength:'Huge bundles with extended warranties',         note:'Membership required',    tags:['Bundle Deals','Extended Warranty'],  tc:['b','o'] },
+  ],
+  shoes: [
+    { name:'StockX',      icon:'📈', url:q=>`https://stockx.com/search?s=${enc(q)}`,                               strength:'Live bid/ask market — real-time resale prices', note:'Live market pricing',  tags:['Authenticated','Live Market'],  tc:['g','b'] },
+    { name:'GOAT',        icon:'🐐', url:q=>`https://www.goat.com/search?query=${enc(q)}`,                          strength:'Largest authenticated sneaker marketplace',     note:'Condition-based pricing', tags:['Authenticated','New & Used'],  tc:['g','']  },
+    { name:'Nike',        icon:'✔️', url:q=>`https://www.nike.com/w?q=${enc(q)}&vst=${enc(q)}`,                     strength:'Official retail — exclusive colorways & SNKRS', note:'Retail / MSRP price',  tags:['Official Retail','Member Early Access'], tc:['b','g'] },
+    { name:'Foot Locker', icon:'👟', url:q=>`https://www.footlocker.com/search?query=${enc(q)}`,                    strength:'FLX rewards + frequent sale events',            note:'FLX member discounts', tags:['FLX Rewards','In-Store Pickup'], tc:['o','g'] },
+    { name:'eBay',        icon:'🏷️', url:q=>`https://www.ebay.com/sch/i.html?_nkw=${enc(q)}+shoes&_sop=15`,        strength:'Often 20-50% below retail on popular styles',   note:'Buyer protection included', tags:['Best Value','New & Used'],  tc:['g','o'] },
+  ],
+  cars: [
+    { name:'CarGurus',   icon:'🚗', url:q=>`https://www.cargurus.com/Cars/new/nl-New-Cars-d0#listing=listingSearch?zip=&keywords=${enc(q)}`, strength:'AI-powered deal scoring — flags below-market listings', note:'Great Deal™ rated listings', tags:['Deal Score','Dealer Ratings'], tc:['g','b'] },
+    { name:'AutoTrader', icon:'🔑', url:q=>`https://www.autotrader.com/cars-for-sale/used-cars?keywords=${enc(q)}`,                          strength:'Millions of listings — private & dealer nationwide',    note:'Market value shown',        tags:['Largest Inventory','Private & Dealer'], tc:['b','']  },
+    { name:'Carvana',    icon:'🏎️', url:q=>`https://www.carvana.com/cars?searchQuery=${enc(q)}`,                                             strength:'No-haggle online buying with 7-day returns',            note:'Fixed transparent pricing', tags:['No Haggle','7-Day Returns'],   tc:['g','b'] },
+    { name:'Cars.com',   icon:'📋', url:q=>`https://www.cars.com/shopping/results/?keyword=${enc(q)}`,                                       strength:'Expert reviews + Fair Deal pricing badge',               note:'"Fair Deal" badge shown',   tags:['Expert Reviews','Fair Deal'],  tc:['b','g'] },
+    { name:'Edmunds',    icon:'📊', url:q=>`https://www.edmunds.com/inventory/srp.html?keyword=${enc(q)}`,                                   strength:'True Market Value® — know exactly what to pay',          note:'True Market Value®',        tags:['True Market Value','No-Haggle Price'], tc:['o','b'] },
+  ],
+  tickets: [
+    { name:'TickPick',      icon:'✅', url:q=>`https://www.tickpick.com/search#q=${enc(q)}`,                                          strength:'ZERO buyer fees — all-in pricing from the start',     note:'No hidden fees added',    tags:['Zero Buyer Fees','All-In Pricing'], tc:['g','g'] },
+    { name:'SeatGeek',      icon:'📍', url:q=>`https://seatgeek.com/search?search%5Bterm%5D=${enc(q)}`,                               strength:'Deal Score™ highlights the best value seats',          note:'Deal Score 0–100 shown',  tags:['Deal Score™','Best Value'],        tc:['b','g'] },
+    { name:'StubHub',       icon:'🎫', url:q=>`https://www.stubhub.com/find/s/?q=${enc(q)}`,                                          strength:'Largest ticket marketplace with FanProtect guarantee', note:'FanProtect guarantee',    tags:['FanProtect','Largest Market'],     tc:['g','b'] },
+    { name:'Vivid Seats',   icon:'💺', url:q=>`https://www.vividseats.com/search?searchTerm=${enc(q)}`,                               strength:'Cash-back Visa rewards on every purchase',             note:'100% buyer guarantee',    tags:['Buyer Guarantee','Cash Rewards'],  tc:['g','o'] },
+    { name:'Ticketmaster',  icon:'🎟️', url:q=>`https://www.ticketmaster.com/search?q=${enc(q)}`,                                     strength:'Official venue partner — face value where available',   note:'Face value available',    tags:['Official Source','Verified Seats'], tc:['b','g'] },
+  ],
+  firearms: [
+    { name:'GunBroker',         icon:'🎯', url:q=>`https://www.gunbroker.com/All/search?Keywords=${enc(q)}&Sort=13`,            strength:"America's largest firearms marketplace",                    note:'New & used pricing',         tags:['Largest Marketplace','Auction & BIN'],  tc:['o','b'] },
+    { name:"Bud's Gun Shop",    icon:'🏪', url:q=>`https://www.budsgunshop.com/catalog/index.php?keywords=${enc(q)}`,           strength:'Top-rated dealer with competitive retail pricing',           note:'MAP pricing + free shipping', tags:['Top Rated','Free Shipping'],           tc:['g','b'] },
+    { name:'Palmetto State',    icon:'🦅', url:q=>`https://palmettostatearmory.com/search/?q=${enc(q)}`,                        strength:'Budget-friendly ARs, handguns & frequent flash sales',       note:'Frequent flash sales',        tags:['PSA Deals','Budget Friendly'],         tc:['o','g'] },
+    { name:'GrabAGun',          icon:'🔒', url:q=>`https://www.grabaguns.com/search?keywords=${enc(q)}`,                        strength:'Consistently some of the lowest prices in the industry',     note:'Price match policy',          tags:['Low Prices','Price Match'],            tc:['g','b'] },
+    { name:"Sportsman's Guide", icon:'🦌', url:q=>`https://www.sportsmansguide.com/catalog?q=${enc(q)}`,                       strength:'Guns, ammo, and outdoor gear with club member discounts',    note:'Club pricing available',      tags:['Club Pricing','Ammo & Guns'],          tc:['o','g'] },
+  ],
+  clothing: [
+    { name:'Amazon Fashion',    icon:'👗', url:q=>`https://www.amazon.com/s?k=${enc(q)}&rh=n%3A7141123011`,                     strength:'Millions of styles with free Prime returns',                note:'Free Prime returns',          tags:['Prime Returns','Huge Selection'],  tc:['b','g'] },
+    { name:'ASOS',              icon:'🛍️', url:q=>`https://www.asos.com/us/search/?q=${enc(q)}`,                               strength:'Trendy global brands with student discounts',               note:'Student 10% off available',   tags:['Student Discount','Free Returns'], tc:['g','o'] },
+    { name:'Nordstrom Rack',    icon:'🔴', url:q=>`https://www.nordstromrack.com/s/${enc(q)}`,                                  strength:'Designer brands at up to 70% off retail',                   note:'Up to 70% off retail',        tags:['Up to 70% Off','Premium Brands'],  tc:['g','b'] },
+    { name:'Poshmark',          icon:'🌸', url:q=>`https://poshmark.com/search?query=${enc(q)}&type=listings`,                 strength:'Like-new pre-loved items at a fraction of retail',           note:'Social shopping prices',      tags:['Pre-Owned','Authenticated'],       tc:['o','g'] },
+    { name:'eBay Fashion',      icon:'🏷️', url:q=>`https://www.ebay.com/sch/i.html?_nkw=${enc(q)}+clothing&_sop=15`,          strength:'Often the absolute lowest prices on brand-name clothing',    note:'Auction & Buy It Now',        tags:['Best Value','New & Used'],         tc:['g','']  },
+  ],
+  jewelry: [
+    { name:'James Allen',       icon:'💎', url:q=>`https://www.jamesallen.com/search/?s=${enc(q)}`,                           strength:'360° HD diamond videos + best online transparency',          note:'Transparent pricing',         tags:['360° Diamond View','Lifetime Warranty'], tc:['b','g'] },
+    { name:'Blue Nile',         icon:'🔵', url:q=>`https://www.bluenile.com/search/diamond-jewelry?search=${enc(q)}`,        strength:'Industry-leading prices with GIA-certified stones',           note:'Price match guarantee',       tags:['Price Match','GIA Certified'],    tc:['g','b'] },
+    { name:'Brilliant Earth',   icon:'🌍', url:q=>`https://www.brilliantearth.com/search/?q=${enc(q)}`,                      strength:'Lab-grown diamonds = 60-80% below mined stone prices',        note:'Lab = 60-80% cheaper',        tags:['Lab-Grown','Ethically Sourced'],  tc:['g','b'] },
+    { name:'Zales',             icon:'✨', url:q=>`https://www.zales.com/search?q=${enc(q)}`,                                  strength:'Traditional retailer with frequent 40-60% sale events',       note:'Frequent deep sales',         tags:['Financing Available','In-Store'], tc:['b','o'] },
+    { name:'Etsy Jewelry',      icon:'🎨', url:q=>`https://www.etsy.com/search?q=${enc(q)}+jewelry`,                          strength:'Handcrafted & custom pieces often below big-box prices',      note:'Wide price range',            tags:['Handmade','Custom Orders'],       tc:['o','g'] },
+  ],
+  gaming: [
+    { name:'CDKeys',    icon:'🔑', url:q=>`https://www.cdkeys.com/catalogsearch/result/?q=${enc(q)}`,                strength:'Digital game codes at 30-70% below retail instantly',  note:'Digital download only',   tags:['Up to 70% Off','Instant Delivery'], tc:['g','g'] },
+    { name:'Amazon',    icon:'📦', url:q=>`https://www.amazon.com/s?k=${enc(q)}&rh=n%3A468642`,                      strength:'Best pre-order pricing + Prime same-day delivery',     note:'Price drop guarantee',    tags:['Prime Eligible','Pre-Order Deals'], tc:['b','g'] },
+    { name:'Walmart',   icon:'🔵', url:q=>`https://www.walmart.com/search?q=${enc(q)}+game&sort=price_low`,          strength:'Rollback prices often beat everyone else at launch',   note:'In-store rollback deals', tags:['Rollback Deals','Free Pickup'],     tc:['b','g'] },
+    { name:'Best Buy',  icon:'💙', url:q=>`https://www.bestbuy.com/site/searchpage.jsp?st=${enc(q)}`,                strength:'Price match + trade-in value + in-store pickup today', note:'Price match guarantee',   tags:['Price Match','Store Pickup'],       tc:['b','g'] },
+    { name:'GameStop',  icon:'🎮', url:q=>`https://www.gamestop.com/search#q=${enc(q)}&t=All`,                       strength:'Best trade-in credit + certified pre-owned deals',     note:'New & pre-owned',         tags:['Trade-In Credit','Used Available'], tc:['o','g'] },
+  ],
+  furniture: [
+    { name:'Wayfair',             icon:'🛋️', url:q=>`https://www.wayfair.com/keyword.php?keyword=${enc(q)}`,                     strength:'Widest furniture selection with free shipping',           note:'Free shipping over $35',     tags:['Free Shipping','Way Day Sales'],    tc:['g','o'] },
+    { name:'IKEA',                icon:'🟡', url:q=>`https://www.ikea.com/us/en/search/products/?q=${enc(q)}`,                    strength:'Unbeatable price-per-quality — the budget king',         note:'Lowest price point',         tags:['Lowest Prices','Flat Pack'],        tc:['g','b'] },
+    { name:'Facebook Marketplace',icon:'📘', url:q=>`https://www.facebook.com/marketplace/search?query=${enc(q)}`,                strength:'Local pickup = zero shipping on large, heavy items',     note:'Negotiate directly',         tags:['Local Pickup','Zero Fees'],         tc:['b','g'] },
+    { name:'Overstock',           icon:'💰', url:q=>`https://www.overstock.com/search?keywords=${enc(q)}&SearchType=Header`,      strength:'Perpetual clearance sales with Club O member savings',   note:'Always on sale',             tags:['Up to 70% Off','Club O Rewards'],   tc:['g','o'] },
+    { name:'Amazon Home',         icon:'📦', url:q=>`https://www.amazon.com/s?k=${enc(q)}&rh=n%3A1055398`,                        strength:'Fast Prime delivery even on large furniture items',       note:'Prime delivery available',   tags:['Prime Delivery','Huge Selection'],  tc:['b','']  },
+  ],
+  sports: [
+    { name:"Dick's Sporting Goods",icon:'🏆', url:q=>`https://www.dickssportinggoods.com/s/search/${enc(q)}`,                  strength:"America's #1 sporting goods — price match guarantee",      note:'Price match guarantee',    tags:['ScoreCard Rewards','Price Match'],     tc:['b','g'] },
+    { name:'REI',                  icon:'⛺', url:q=>`https://www.rei.com/search?q=${enc(q)}`,                                  strength:'Member dividends + certified used gear at 50% off',        note:'Member 10% annual dividend', tags:['Co-op Dividend','Used Gear'],        tc:['g','o'] },
+    { name:'SidelineSwap',         icon:'♻️', url:q=>`https://sidelineswap.com/search?query=${enc(q)}`,                        strength:'Quality used sports equipment at up to 80% off retail',    note:'Up to 80% off retail',     tags:['Used Gear','Up to 80% Off'],          tc:['g','g'] },
+    { name:"Bass Pro / Cabela's",  icon:'🎣', url:q=>`https://www.basspro.com/shop/SearchDisplay?searchTerm=${enc(q)}`,        strength:'Best for hunting, fishing & outdoor adventure gear',        note:'Club member pricing',      tags:['Outdoor Focused','Club Deals'],       tc:['o','g'] },
+    { name:'Amazon',               icon:'📦', url:q=>`https://www.amazon.com/s?k=${enc(q)}&rh=n%3A3375251`,                   strength:'Fastest delivery + widest sports & fitness selection',     note:'Prime delivery',           tags:['Prime Eligible','Widest Selection'],  tc:['b','']  },
+  ],
+  tools: [
+    { name:'Home Depot',    icon:'🟠', url:q=>`https://www.homedepot.com/s/${enc(q)}?NCNI-5`,                            strength:"#1 power tool destination with Pro Xtra rewards",         note:'Price match guarantee',  tags:['Pro Xtra','Price Match'],        tc:['b','g'] },
+    { name:"Lowe's",        icon:'🔵', url:q=>`https://www.lowes.com/search?searchTerm=${enc(q)}`,                       strength:'Great brand selection + 10% military discount',           note:'Price match + 10%',      tags:["MyLowe's Rewards",'Price Match'],tc:['b','g'] },
+    { name:'Amazon',        icon:'📦', url:q=>`https://www.amazon.com/s?k=${enc(q)}&rh=n%3A228013`,                     strength:'Best online prices + business prime discounts',           note:'Business Prime pricing', tags:['Prime Eligible','B2B Pricing'],  tc:['b','']  },
+    { name:'Northern Tool', icon:'⚙️', url:q=>`https://www.northerntool.com/search?term=${enc(q)}`,                      strength:'Heavy-duty industrial-grade tools at contractor pricing',  note:'Frequent sales events',  tags:['Pro Grade','Free Shipping'],     tc:['o','g'] },
+    { name:'eBay Tools',    icon:'🏷️', url:q=>`https://www.ebay.com/sch/i.html?_nkw=${enc(q)}&_sacat=631&_sop=15`,     strength:'Refurbished & used tools at 40-60% below retail',          note:'Buyer protection included', tags:['40-60% Off','New & Used'],     tc:['g','o'] },
+  ],
+};
+
+/* ══════════════════════════════════════════════════════════════
+   CATEGORY DETECTION
+═══════════════════════════════════════════════════════════════ */
+const CATS = [
+  { id:'cars',      label:'Vehicles & Automotive',     icon:'🚗', tip:'<strong>Pro tip:</strong> CarGurus flags listings priced below market — look for the green "Great Deal" badge.' },
+  { id:'tickets',   label:'Event Tickets',             icon:'🎟️', tip:'<strong>Pro tip:</strong> TickPick has ZERO buyer fees — that\'s often $10-30 cheaper per ticket vs competitors.' },
+  { id:'firearms',  label:'Firearms & Shooting',       icon:'🎯', tip:'<strong>Pro tip:</strong> All purchases require FFL dealer transfer — factor in the local dealer fee (~$25–50).' },
+  { id:'shoes',     label:'Shoes & Sneakers',          icon:'👟', tip:'<strong>Pro tip:</strong> StockX shows live bid/ask prices updated by the second — like a stock market for sneakers.' },
+  { id:'electronics',label:'Electronics & Tech',       icon:'📱', tip:'<strong>Pro tip:</strong> B&H Photo often charges no sales tax for orders shipped outside New York & New Jersey.' },
+  { id:'gaming',    label:'Video Games & Consoles',    icon:'🎮', tip:'<strong>Pro tip:</strong> CDKeys sells digital game codes at 30–70% off with instant delivery — always check them first.' },
+  { id:'clothing',  label:'Clothing & Apparel',        icon:'👗', tip:'<strong>Pro tip:</strong> Nordstrom Rack + Poshmark can save you 40–80% on name-brand clothing.' },
+  { id:'jewelry',   label:'Jewelry & Accessories',     icon:'💍', tip:'<strong>Pro tip:</strong> Lab-grown diamonds at Brilliant Earth are 60–80% cheaper than mined with identical appearance.' },
+  { id:'furniture', label:'Furniture & Home Décor',    icon:'🛋️', tip:'<strong>Pro tip:</strong> Facebook Marketplace + local pickup = zero shipping cost on heavy furniture items.' },
+  { id:'sports',    label:'Sports & Outdoors',         icon:'⛺', tip:'<strong>Pro tip:</strong> REI Outlet and SidelineSwap offer certified used gear at up to 80% off retail.' },
+  { id:'tools',     label:'Tools & Hardware',          icon:'🔧', tip:'<strong>Pro tip:</strong> eBay refurbished tools from top-rated sellers save 40–60% — most come with seller warranty.' },
+];
+
+const KW = {
+  cars:      ['car','truck','suv','vehicle','auto','sedan','coupe','pickup','van','minivan','rv','motorcycle','moto','ford','chevy','chevrolet','toyota','honda','bmw','mercedes','audi','tesla','nissan','hyundai','kia','dodge','ram','gmc','subaru','volkswagen','mazda','lexus','infiniti','acura','cadillac','porsche','ferrari','lamborghini','mustang','camaro','corvette','charger','tahoe','explorer','4runner','wrangler','bronco','f-150','f150','silverado','tundra'],
+  tickets:   ['ticket','concert','show','tour','event','game','match','festival','nfl','nba','mlb','nhl','playoff','finals','championship','superbowl','coachella','lollapalooza','broadway','seats','vip','general admission'],
+  firearms:  ['gun','rifle','pistol','shotgun','revolver','handgun','firearm','ar-15','ar15','ak47','ak-47','9mm','45acp','glock','sig sauer','s&w','ruger','springfield','beretta','colt','remington','mossberg','winchester','ammunition','ammo','holster','suppressor','silencer'],
+  shoes:     ['shoe','sneaker','boot','sandal','air force','air max','jordan','yeezy','dunk','vans','converse','new balance','asics','saucony','hoka','brooks','timberland','ugg','birkenstock'],
+  electronics:['phone','iphone','android','samsung','pixel','laptop','computer','mac','macbook','ipad','tablet','tv','television','headphone','airpods','earbuds','speaker','monitor','camera','drone','gpu','cpu','processor','graphics card','ram','ssd','hard drive','keyboard','mouse','router','smartwatch','apple watch','kindle'],
+  gaming:    ['ps5','ps4','playstation','xbox','nintendo switch','switch','game','gaming','video game','controller','console','steam','pc game','call of duty','fortnite','fifa','nba 2k','madden','pokemon','zelda','mario','halo'],
+  clothing:  ['shirt','pants','jeans','dress','jacket','coat','hoodie','sweater','shorts','skirt','blouse','suit','blazer','swimsuit','leggings','athletic','underwear','socks','hat','cap','beanie','scarf','gloves','belt','clothing','apparel','fashion'],
+  jewelry:   ['ring','necklace','bracelet','earring','diamond','gold','silver','platinum','pearl','engagement','wedding','jewelry','jewellery','pendant','chain','anklet'],
+  furniture: ['sofa','couch','chair','table','desk','bed','dresser','nightstand','bookcase','shelf','cabinet','wardrobe','mattress','furniture','decor','rug','lamp','curtain','blinds','mirror'],
+  sports:    ['bike','bicycle','kayak','surfboard','skateboard','ski','snowboard','tent','sleeping bag','backpack','hiking','camping','fishing','hunting','golf','tennis','basketball','football','soccer','baseball','gym','dumbbell','barbell','treadmill','elliptical'],
+  tools:     ['drill','saw','hammer','wrench','screwdriver','pliers','level','toolbox','dewalt','milwaukee','makita','ryobi','craftsman','bosch','generator','air compressor','nail gun','sander','grinder','ladder'],
+};
+
+function detectCat(q) {
+  const lq = q.toLowerCase();
+  let best = null, bestScore = 0;
+  for (const cat of CATS) {
+    let score = 0;
+    for (const kw of (KW[cat.id] || [])) {
+      if (lq.includes(kw)) score += kw.length;
+    }
+    if (score > bestScore) { bestScore = score; best = cat; }
+  }
+  return best || { id:'general', label:'General Shopping', icon:'🛒', tip:'<strong>Pro tip:</strong> Google Shopping compares prices across every major retailer in one view.' };
+}
+
+/* ══════════════════════════════════════════════════════════════
+   HELPERS
+═══════════════════════════════════════════════════════════════ */
+const enc = s => encodeURIComponent(s);
+
+function qs(term) {
+  document.getElementById('q').value = term;
+  doSearch();
+}
+
+function resetView() {
+  document.getElementById('featureSection').style.display = '';
+  document.getElementById('resultsSection').style.display = 'none';
+  document.getElementById('disclaimer').style.display = 'none';
+  document.getElementById('q').value = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  return false;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SEARCH FLOW
+═══════════════════════════════════════════════════════════════ */
+function doSearch() {
+  const query = document.getElementById('q').value.trim();
+  if (!query) { document.getElementById('q').focus(); return; }
+
+  document.getElementById('featureSection').style.display = 'none';
+  const rs = document.getElementById('resultsSection');
+  const disc = document.getElementById('disclaimer');
+  rs.style.display = 'block';
+  disc.style.display = 'none';
+
+  rs.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  showSkeleton();
+
+  const delay = 700 + Math.random() * 500;
+  setTimeout(() => { showResults(query); disc.style.display = 'block'; }, delay);
+}
+
+function showSkeleton() {
+  document.getElementById('resultsSection').innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:12px">
+      ${Array(5).fill(0).map(() => `
+        <div class="skel-card">
+          <div class="s" style="width:28px;height:28px;border-radius:50%"></div>
+          <div class="s s-sq"></div>
+          <div>
+            <div class="s s-lg" style="width:38%;margin-bottom:10px"></div>
+            <div class="s s-sm" style="width:62%;margin-bottom:8px"></div>
+            <div class="s s-sm" style="width:42%"></div>
+          </div>
+          <div style="margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:8px">
+            <div class="s" style="width:90px;height:14px"></div>
+            <div class="s" style="width:90px;height:36px;border-radius:10px"></div>
+          </div>
+        </div>
+      `).join('')}
+    </div>`;
+}
+
+function showResults(query) {
+  const cat  = detectCat(query);
+  const list = R[cat.id] || R.general;
+
+  const rankLabels = ['🥇','🥈','🥉','4','5'];
+
+  const cardsHtml = list.map((r, i) => {
+    const isTop = i === 0;
+    const tagsHtml = r.tags.map((t, ti) => `<span class="r-tag ${r.tc[ti]||''}">${t}</span>`).join('');
+    return `
+      <a href="${r.url(query)}" target="_blank" rel="noopener noreferrer"
+         class="r-card rank-${i+1} ${isTop ? 'top' : ''}">
+        <div class="r-rank">
+          <div class="r-rank-num">${rankLabels[i]}</div>
+        </div>
+        <div class="r-logo">${r.icon}</div>
+        <div class="r-info">
+          <div class="r-name">
+            ${r.name}
+            ${isTop ? '<span class="best-tag">⚡ Best Pick</span>' : ''}
+          </div>
+          <div class="r-desc">${r.strength}</div>
+          <div class="r-tags">${tagsHtml}</div>
+        </div>
+        <div class="r-right">
+          <div>
+            <div class="r-price-note">${r.note}</div>
+            <div class="r-price-sub">Click to see live price →</div>
+          </div>
+          <div class="r-cta">
+            View Deal
+            <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </div>
+        </div>
+      </a>`;
+  }).join('');
+
+  document.getElementById('resultsSection').innerHTML = `
+    <div class="results-hdr">
+      <div class="results-hdr-title">
+        Top ${list.length} Sources &nbsp;<span>for "${query}"</span>
+      </div>
+      <div class="live-badge"><div class="live-dot"></div> Live</div>
+    </div>
+
+    <div class="cat-banner">
+      <div class="ci">${cat.icon}</div>
+      <div>
+        <div class="cl">Category Detected</div>
+        <div class="cn">${cat.label}</div>
+      </div>
+      <div class="cat-tip">${cat.tip}</div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-num">50+</div>
+        <div class="stat-lbl">Retailers Checked</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">12</div>
+        <div class="stat-lbl">Categories Covered</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">Live</div>
+        <div class="stat-lbl">Price Updates</div>
+      </div>
+    </div>
+
+    <div class="cards-list">${cardsHtml}</div>`;
+
+  /* Staggered entrance animation */
+  document.querySelectorAll('.r-card').forEach((card, i) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(14px)';
+    setTimeout(() => {
+      card.style.transition = 'opacity .32s ease, transform .32s ease, background .2s, border-color .2s, box-shadow .2s';
+      card.style.opacity = '1';
+      card.style.transform = 'translateY(0)';
+    }, i * 85);
+  });
+}
+
+/* Enter key */
+document.getElementById('q').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doSearch();
+});
+</script>
+</body>
+</html>
