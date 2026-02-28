@@ -3,871 +3,1371 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jackson Gaby — Accounting Professional</title>
+  <title>Carter's Cuts | Lawncare & Landscaping – Allendale, MI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
-    /* ─── Reset & Base ───────────────────────────────────────── */
+    /* ── Reset & Base ───────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg:        #ffffff;
-      --bg-alt:    #f5f5f7;
-      --bg-card:   #fbfbfd;
-      --text:      #1d1d1f;
-      --text-2:    #6e6e73;
-      --text-3:    #86868b;
-      --accent:    #0071e3;
-      --accent-h:  #0077ed;
-      --border:    rgba(0,0,0,.08);
-      --nav-bg:    rgba(255,255,255,.82);
-      --radius:    18px;
-      --radius-lg: 28px;
-      --shadow:    0 4px 24px rgba(0,0,0,.07);
-      --shadow-lg: 0 12px 48px rgba(0,0,0,.12);
-      --font:      -apple-system, BlinkMacSystemFont, "SF Pro Display",
-                   "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+      --green:      #5DBB2A;
+      --green-dark: #3d8a18;
+      --green-deep: #1e4a0a;
+      --black:      #111111;
+      --charcoal:   #222222;
+      --gray:       #555555;
+      --light:      #f7f7f5;
+      --white:      #ffffff;
     }
-
-    html { scroll-behavior: smooth; font-size: 16px; }
-
+    html { scroll-behavior: smooth; }
     body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text);
-      -webkit-font-smoothing: antialiased;
+      font-family: 'Open Sans', sans-serif;
+      color: var(--charcoal);
+      background: var(--white);
       overflow-x: hidden;
     }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; width: 100%; object-fit: cover; }
 
-    /* ─── Nav ────────────────────────────────────────────────── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      height: 52px;
-      background: var(--nav-bg);
-      backdrop-filter: saturate(180%) blur(20px);
-      -webkit-backdrop-filter: saturate(180%) blur(20px);
-      border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 24px;
-      transition: background .3s;
+    /* ── Utility ────────────────────────────────────────────── */
+    .section-label {
+      display: inline-block;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 0.75rem;
     }
-
-    nav .logo {
-      font-size: 17px; font-weight: 600; letter-spacing: -.02em;
-      color: var(--text); text-decoration: none;
-    }
-
-    nav ul {
-      list-style: none; display: flex; gap: 28px;
-    }
-
-    nav ul a {
-      font-size: 13px; color: var(--text-2); text-decoration: none;
-      transition: color .2s;
-    }
-    nav ul a:hover { color: var(--text); }
-
-    nav .cta {
-      background: var(--accent);
-      color: #fff; font-size: 13px; font-weight: 500;
-      padding: 6px 16px; border-radius: 20px;
-      text-decoration: none; transition: background .2s;
-    }
-    nav .cta:hover { background: var(--accent-h); }
-
-    /* ─── Sections shared ────────────────────────────────────── */
-    section { padding: 100px 24px; }
-
-    .container { max-width: 980px; margin: 0 auto; }
-    .container-wide { max-width: 1200px; margin: 0 auto; }
-
-    .eyebrow {
-      font-size: 13px; font-weight: 600; letter-spacing: .08em;
-      text-transform: uppercase; color: var(--accent);
-      margin-bottom: 12px;
-    }
-
     .section-title {
-      font-size: clamp(36px, 5vw, 56px);
-      font-weight: 700; letter-spacing: -.03em; line-height: 1.05;
-      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1.9rem, 4vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--black);
     }
-
+    .section-title span { color: var(--green); }
     .section-sub {
-      font-size: 19px; line-height: 1.6; color: var(--text-2);
-      margin-top: 16px; max-width: 600px;
+      margin-top: 1rem;
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: var(--gray);
+      max-width: 560px;
     }
-
-    /* ─── Hero ───────────────────────────────────────────────── */
-    #hero {
-      min-height: 100vh;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center;
-      padding: 120px 24px 80px;
-      background: linear-gradient(180deg, #fbfbfd 0%, #ffffff 100%);
-      position: relative; overflow: hidden;
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.88rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.9rem 2rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      border: none;
     }
-
-    #hero::before {
-      content: '';
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse 80% 60% at 50% -20%, rgba(0,113,227,.06) 0%, transparent 70%),
-        radial-gradient(ellipse 60% 40% at 80% 80%, rgba(0,113,227,.04) 0%, transparent 60%);
-      pointer-events: none;
-    }
-
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--bg-alt); border: 1px solid var(--border);
-      border-radius: 20px; padding: 6px 16px;
-      font-size: 13px; color: var(--text-2); margin-bottom: 32px;
-    }
-    .hero-badge span { color: var(--accent); font-weight: 600; }
-
-    .hero-name {
-      font-size: clamp(52px, 9vw, 96px);
-      font-weight: 700; letter-spacing: -.04em; line-height: 1;
-      background: linear-gradient(135deg, #1d1d1f 0%, #424245 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 20px;
-    }
-
-    .hero-title {
-      font-size: clamp(22px, 3.5vw, 36px);
-      font-weight: 400; color: var(--text-2);
-      letter-spacing: -.01em; line-height: 1.3;
-      margin-bottom: 40px;
-    }
-
-    .hero-ctas {
-      display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;
-    }
-
     .btn-primary {
-      background: var(--accent); color: #fff;
-      font-size: 17px; font-weight: 500;
-      padding: 14px 28px; border-radius: 980px;
-      text-decoration: none; transition: background .2s, transform .15s;
-      display: inline-block;
+      background: var(--green);
+      color: var(--white);
     }
-    .btn-primary:hover { background: var(--accent-h); transform: scale(1.02); }
-
-    .btn-secondary {
-      background: transparent; color: var(--accent);
-      font-size: 17px; font-weight: 500;
-      padding: 14px 28px; border-radius: 980px;
-      border: 1.5px solid rgba(0,113,227,.3);
-      text-decoration: none; transition: border-color .2s, transform .15s;
-      display: inline-block;
+    .btn-primary:hover { background: var(--green-dark); transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 2px solid var(--white);
     }
-    .btn-secondary:hover { border-color: var(--accent); transform: scale(1.02); }
-
-    .scroll-hint {
-      position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: 6px;
-      color: var(--text-3); font-size: 12px; letter-spacing: .04em;
-      animation: bounce 2s infinite;
+    .btn-outline:hover { background: rgba(255,255,255,0.12); transform: translateY(-2px); }
+    .btn-dark {
+      background: var(--black);
+      color: var(--white);
     }
-    .scroll-hint svg { width: 18px; height: 18px; stroke: var(--text-3); }
+    .btn-dark:hover { background: var(--charcoal); transform: translateY(-2px); }
 
-    @keyframes bounce {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      50%       { transform: translateX(-50%) translateY(6px); }
-    }
-
-    /* ─── About ──────────────────────────────────────────────── */
-    #about { background: var(--bg); }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px; align-items: center;
+    /* ── NAV ────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      height: 78px;
+      background: rgba(10,10,10,0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(93,187,42,0.2);
+      transition: background 0.3s;
     }
 
-    .about-stat-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    /* Logo mark */
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      user-select: none;
     }
-
-    .stat-card {
-      background: var(--bg-alt);
-      border-radius: var(--radius);
-      padding: 28px 24px;
-      border: 1px solid var(--border);
+    .logo-mark {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
     }
-
-    .stat-value {
-      font-size: 36px; font-weight: 700; letter-spacing: -.03em;
-      color: var(--accent); line-height: 1;
+    .logo-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
-    .stat-label {
-      font-size: 13px; color: var(--text-2); margin-top: 6px; line-height: 1.4;
+    .logo-c {
+      width: 26px;
+      height: 26px;
+      background: var(--green);
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 1rem;
+      color: var(--white);
+      line-height: 1;
+      flex-shrink: 0;
     }
-
-    /* ─── Strengths ──────────────────────────────────────────── */
-    #strengths { background: var(--bg-alt); }
-
-    .strengths-header { text-align: center; margin-bottom: 60px; }
-    .strengths-header .section-sub { margin: 16px auto 0; }
-
-    .strength-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .strength-card {
-      background: var(--bg);
-      border-radius: var(--radius-lg);
-      padding: 36px 32px;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      transition: transform .25s, box-shadow .25s;
-    }
-    .strength-card:hover {
-      transform: translateY(-6px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .strength-icon {
-      width: 52px; height: 52px; border-radius: 14px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 26px; margin-bottom: 22px;
-    }
-
-    .strength-card h3 {
-      font-size: 20px; font-weight: 600; letter-spacing: -.02em;
-      margin-bottom: 10px;
-    }
-    .strength-card p { font-size: 15px; line-height: 1.6; color: var(--text-2); }
-
-    /* icon bg colors */
-    .ic-blue   { background: rgba(0,113,227,.10); }
-    .ic-green  { background: rgba(52,199,89,.10); }
-    .ic-purple { background: rgba(175,82,222,.10); }
-    .ic-orange { background: rgba(255,149,0,.10); }
-    .ic-pink   { background: rgba(255,45,85,.10); }
-    .ic-teal   { background: rgba(90,200,250,.10); }
-
-    /* ─── Education ──────────────────────────────────────────── */
-    #education { background: var(--bg); }
-
-    .edu-card {
-      background: linear-gradient(135deg, #0071e3 0%, #0a84ff 100%);
-      border-radius: var(--radius-lg);
-      padding: 52px 56px;
-      color: #fff;
-      display: grid; grid-template-columns: 1fr auto;
-      align-items: start; gap: 40px;
-      box-shadow: 0 16px 48px rgba(0,113,227,.25);
-    }
-
-    .edu-card .eyebrow { color: rgba(255,255,255,.7); }
-
-    .edu-school {
-      font-size: 28px; font-weight: 700; letter-spacing: -.02em;
-      margin-bottom: 10px;
-    }
-    .edu-degree {
-      font-size: 18px; font-weight: 400; opacity: .85; margin-bottom: 20px;
-    }
-
-    .edu-tag {
-      display: inline-block; background: rgba(255,255,255,.18);
-      border-radius: 8px; padding: 5px 12px;
-      font-size: 13px; font-weight: 500; margin: 4px 4px 4px 0;
-    }
-
-    .edu-gpa-block { text-align: center; }
-    .edu-gpa-num {
-      font-size: 64px; font-weight: 700; letter-spacing: -.05em;
+    .logo-word {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 1.05rem;
+      color: var(--white);
+      letter-spacing: 0.05em;
       line-height: 1;
     }
-    .edu-gpa-label { font-size: 14px; opacity: .7; margin-top: 4px; }
-
-    .edu-cpa {
-      margin-top: 28px;
-      background: rgba(255,255,255,.12);
-      border: 1px solid rgba(255,255,255,.2);
-      border-radius: var(--radius);
-      padding: 20px 24px;
+    .logo-sub-text {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin-top: 1px;
+      padding-left: 2px;
     }
-    .edu-cpa h4 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
-    .edu-cpa p  { font-size: 14px; opacity: .8; }
-
-    /* ─── Skills ─────────────────────────────────────────────── */
-    #skills { background: var(--bg-alt); }
-
-    .skills-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
-      margin-top: 56px;
+    .logo-grass {
+      width: 100%;
+      height: 5px;
+      margin-top: 2px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 10'%3E%3Cpath d='M0,8 Q3,0 6,8 Q9,2 12,8 Q15,1 18,8 Q21,3 24,8 Q27,0 30,8 Q33,2 36,8 Q39,1 42,8 Q45,3 48,8 Q51,0 54,8 Q57,2 60,8 Q63,1 66,8 Q69,3 72,8 Q75,0 78,8 Q81,2 84,8 Q87,1 90,8 Q93,3 96,8 Q99,0 102,8 Q105,2 108,8 Q111,1 114,8 Q117,3 120,8' fill='%235DBB2A'/%3E%3C/svg%3E") repeat-x bottom;
+      background-size: 60px 5px;
     }
 
-    .skill-group {
-      background: var(--bg);
-      border-radius: var(--radius-lg);
-      padding: 36px;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--green); }
+    .nav-cta {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: var(--green);
+      color: var(--white);
+      padding: 0.6rem 1.4rem;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--green-dark); }
+
+    /* Mobile hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: all 0.25s;
+    }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 78px; left: 0; right: 0;
+      background: rgba(10,10,10,0.97);
+      backdrop-filter: blur(12px);
+      z-index: 999;
+      padding: 2rem 5%;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding-bottom: 1.25rem;
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover { color: var(--green); }
+
+    /* ── HERO ───────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 620px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('MAIN.jpg') center center / cover no-repeat;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        105deg,
+        rgba(0,0,0,0.72) 0%,
+        rgba(0,0,0,0.45) 55%,
+        rgba(0,0,0,0.15) 100%
+      );
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 8%;
+      max-width: 760px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--green);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      border-radius: 3px;
+      margin-bottom: 1.4rem;
+    }
+    .hero-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2.6rem, 6.5vw, 5rem);
+      line-height: 1.05;
+      color: var(--white);
+      text-shadow: 0 2px 20px rgba(0,0,0,0.4);
+      margin-bottom: 1.4rem;
+    }
+    .hero-title span { color: var(--green); }
+    .hero-tagline {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      line-height: 1.7;
+      color: rgba(255,255,255,0.88);
+      margin-bottom: 2.2rem;
+      max-width: 520px;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+    }
+    .hero-phone {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--white);
+      letter-spacing: 0.03em;
+    }
+    .hero-phone svg { flex-shrink: 0; }
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      color: rgba(255,255,255,0.5);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50%      { transform: translateX(-50%) translateY(6px); }
     }
 
-    .skill-group h3 {
-      font-size: 13px; font-weight: 600; letter-spacing: .08em;
-      text-transform: uppercase; color: var(--accent);
-      margin-bottom: 20px;
+    /* ── TRUST BAR ──────────────────────────────────────────── */
+    .trust-bar {
+      background: var(--green);
+      padding: 1.1rem 5%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2rem 3.5rem;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+    .trust-item svg { flex-shrink: 0; opacity: 0.9; }
+
+    /* ── ABOUT ──────────────────────────────────────────────── */
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 520px;
+    }
+    .about-image {
+      position: relative;
+      overflow: hidden;
+    }
+    .about-image img {
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .about-image:hover img { transform: scale(1.04); }
+    .about-image-badge {
+      position: absolute;
+      bottom: 1.8rem;
+      right: -1px;
+      background: var(--green);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 800;
+      padding: 0.8rem 1.4rem;
+      text-align: center;
+      line-height: 1.3;
+    }
+    .about-image-badge strong { display: block; font-size: 2rem; }
+    .about-content {
+      padding: 5rem 6% 5rem 5%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: var(--light);
+    }
+    .about-checks {
+      margin-top: 1.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .about-check {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--charcoal);
+    }
+    .check-icon {
+      width: 22px;
+      height: 22px;
+      background: var(--green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
     }
 
-    .skill-item {
-      display: flex; align-items: center; gap: 12px;
-      padding: 12px 0; border-bottom: 1px solid var(--border);
+    /* ── SERVICES ───────────────────────────────────────────── */
+    .services {
+      padding: 5.5rem 5%;
+      background: var(--white);
     }
-    .skill-item:last-child { border-bottom: none; }
-
-    .skill-dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: var(--accent); flex-shrink: 0;
+    .services-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
     }
-
-    .skill-name {
-      font-size: 16px; font-weight: 500; flex: 1;
-    }
-
-    .skill-bar-wrap {
-      width: 100px; height: 4px; background: var(--bg-alt);
-      border-radius: 4px; overflow: hidden;
-    }
-    .skill-bar {
-      height: 100%; border-radius: 4px;
-      background: linear-gradient(90deg, #0071e3, #34aadc);
-      transform-origin: left;
-      transform: scaleX(0);
-      transition: transform .8s cubic-bezier(.4,0,.2,1);
-    }
-    .skill-bar.animate { transform: scaleX(1); }
-
-    .course-tags {
-      display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px;
-    }
-    .course-tag {
-      background: var(--bg-alt); border: 1px solid var(--border);
-      border-radius: 10px; padding: 8px 14px;
-      font-size: 14px; color: var(--text-2); font-weight: 500;
-      transition: background .2s, color .2s, border-color .2s;
-    }
-    .course-tag:hover {
-      background: rgba(0,113,227,.08); color: var(--accent);
-      border-color: rgba(0,113,227,.2);
-    }
-
-    /* ─── Experience ─────────────────────────────────────────── */
-    #experience { background: var(--bg); }
-
-    .exp-timeline { margin-top: 56px; display: flex; flex-direction: column; gap: 24px; }
-
-    .exp-card {
-      background: var(--bg-card);
-      border-radius: var(--radius-lg);
-      padding: 40px 44px;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      display: grid; grid-template-columns: 1fr auto;
-      gap: 24px; align-items: start;
-      transition: transform .25s, box-shadow .25s;
-    }
-    .exp-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
-
-    .exp-role {
-      font-size: 22px; font-weight: 700; letter-spacing: -.02em;
-      margin-bottom: 4px;
-    }
-    .exp-company {
-      font-size: 15px; color: var(--text-2); margin-bottom: 20px;
-    }
-
-    .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-    .exp-bullets li {
-      font-size: 15px; line-height: 1.6; color: var(--text-2);
-      display: flex; gap: 10px;
-    }
-    .exp-bullets li::before {
-      content: '—'; color: var(--accent); flex-shrink: 0; font-weight: 700;
-    }
-
-    .exp-badge {
-      background: var(--bg-alt); border: 1px solid var(--border);
-      border-radius: 12px; padding: 10px 16px;
-      text-align: center; white-space: nowrap;
-    }
-    .exp-badge .date { font-size: 13px; font-weight: 600; color: var(--text-2); }
-    .exp-badge .status {
-      display: inline-block; margin-top: 6px;
-      background: rgba(52,199,89,.15); color: #1a7f37;
-      font-size: 11px; font-weight: 700; letter-spacing: .06em;
-      text-transform: uppercase; padding: 3px 8px; border-radius: 6px;
-    }
-    .exp-badge .status.past {
-      background: rgba(0,113,227,.1); color: var(--accent);
-    }
-
-    /* ─── Contact ────────────────────────────────────────────── */
-    #contact {
-      background: linear-gradient(180deg, var(--bg-alt) 0%, var(--bg) 100%);
+    .services-header .section-sub {
+      margin: 1rem auto 0;
       text-align: center;
     }
-
-    .contact-card {
-      background: var(--bg);
-      border-radius: var(--radius-lg);
-      padding: 64px 48px;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      max-width: 640px; margin: 48px auto 0;
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .service-card {
+      background: var(--light);
+      border-radius: 8px;
+      overflow: hidden;
+      border-bottom: 4px solid transparent;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+    }
+    .service-card:hover {
+      border-color: var(--green);
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+    }
+    .service-img {
+      height: 200px;
+      overflow: hidden;
+    }
+    .service-img img {
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s;
+    }
+    .service-card:hover .service-img img { transform: scale(1.06); }
+    .service-body {
+      padding: 1.5rem 1.5rem 1.8rem;
+    }
+    .service-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--green);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+    .service-icon svg { color: white; }
+    .service-body h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin-bottom: 0.55rem;
+      color: var(--black);
+    }
+    .service-body p {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--gray);
     }
 
-    .contact-links { display: flex; flex-direction: column; gap: 14px; margin-top: 32px; }
 
-    .contact-link {
-      display: flex; align-items: center; gap: 16px;
-      background: var(--bg-alt); border-radius: var(--radius);
-      padding: 16px 20px; text-decoration: none;
-      border: 1px solid var(--border);
-      transition: background .2s, border-color .2s, transform .15s;
+    /* ── WHY US ─────────────────────────────────────────────── */
+    .why {
+      padding: 5.5rem 5%;
+      background: var(--charcoal);
+      color: var(--white);
     }
-    .contact-link:hover {
-      background: rgba(0,113,227,.06);
-      border-color: rgba(0,113,227,.2);
-      transform: scale(1.01);
+    .why-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .why-content .section-title { color: var(--white); }
+    .why-content .section-sub { color: rgba(255,255,255,0.65); }
+    .why-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+    .stat-box {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 1.5rem;
+    }
+    .stat-num {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.6rem;
+      font-weight: 900;
+      color: var(--green);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.6);
+      margin-top: 0.4rem;
+    }
+    .why-image-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+    .wi-full {
+      grid-column: 1 / 3;
+      height: 240px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .wi-half {
+      height: 200px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .wi-ba {
+      position: relative;
+      height: 200px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .wi-full img, .wi-half img, .wi-ba img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .wi-ba-label {
+      position: absolute;
+      top: 0.65rem;
+      left: 0.65rem;
+      background: rgba(0,0,0,0.72);
+      color: white;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.65rem;
+      border-radius: 3px;
+      z-index: 1;
+    }
+    .wi-ba-label.after { background: var(--green); }
+
+    /* ── CTA STRIP ──────────────────────────────────────────── */
+    .cta-strip {
+      background: var(--green);
+      padding: 3.5rem 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    .cta-strip-text h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.2;
+    }
+    .cta-strip-text p {
+      color: rgba(255,255,255,0.82);
+      margin-top: 0.4rem;
+      font-size: 1rem;
+    }
+    .cta-strip-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
     }
 
-    .contact-link-icon {
-      width: 40px; height: 40px; border-radius: 10px;
-      background: var(--accent); display: flex; align-items: center;
-      justify-content: center; flex-shrink: 0;
+    /* ── CONTACT ────────────────────────────────────────────── */
+    .contact {
+      padding: 5.5rem 5%;
+      background: var(--white);
     }
-    .contact-link-icon svg { width: 18px; height: 18px; stroke: #fff; fill: none; }
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .contact-info h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+      font-weight: 800;
+      color: var(--black);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .contact-info p {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--gray);
+      margin-bottom: 2rem;
+    }
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+    .contact-detail {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .contact-detail-icon {
+      width: 46px;
+      height: 46px;
+      background: var(--light);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--green);
+    }
+    .contact-detail-text strong {
+      display: block;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 0.2rem;
+    }
+    .contact-detail-text a, .contact-detail-text span {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--black);
+    }
+    .contact-detail-text a:hover { color: var(--green); }
 
-    .contact-link-text { text-align: left; }
-    .contact-link-label { font-size: 11px; color: var(--text-3); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
-    .contact-link-value { font-size: 16px; font-weight: 500; color: var(--text); margin-top: 2px; }
+    /* Form */
+    .contact-form {
+      background: var(--light);
+      border-radius: 10px;
+      padding: 2.5rem;
+    }
+    .contact-form h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--black);
+      margin-bottom: 1.5rem;
+    }
+    .form-group {
+      margin-bottom: 1.1rem;
+    }
+    .form-group label {
+      display: block;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 0.45rem;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 1.5px solid #ddd;
+      border-radius: 5px;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 0.95rem;
+      color: var(--charcoal);
+      background: var(--white);
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--green);
+    }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .form-submit {
+      width: 100%;
+      background: var(--green);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.88rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .form-submit:hover { background: var(--green-dark); transform: translateY(-1px); }
 
-    /* ─── Footer ─────────────────────────────────────────────── */
+    /* ── FOOTER ─────────────────────────────────────────────── */
     footer {
-      background: var(--bg-alt);
-      border-top: 1px solid var(--border);
-      padding: 32px 24px;
-      text-align: center;
+      background: var(--black);
+      padding: 3.5rem 5% 1.5rem;
     }
-    footer p { font-size: 13px; color: var(--text-3); }
-    footer span { color: var(--accent); font-weight: 600; }
-
-    /* ─── Animations ─────────────────────────────────────────── */
-    .js .fade-up {
-      opacity: 0; transform: translateY(30px);
-      transition: opacity .7s ease, transform .7s ease;
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 3rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 1.5rem;
     }
-    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .footer-brand .logo-word { color: var(--white); }
+    .footer-tagline {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.45);
+    }
+    .footer-phone-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1.2rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--green);
+    }
+    .footer-phone-link:hover { color: #7de040; }
+    .footer-col h4 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 1.1rem;
+    }
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .footer-col ul li a {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.6);
+      transition: color 0.2s;
+    }
+    .footer-col ul li a:hover { color: var(--green); }
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .footer-bottom p {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.28);
+    }
+    .footer-bottom span {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.28);
+    }
+    .footer-bottom a { color: var(--green); }
 
-    /* stagger children */
-    .stagger .fade-up:nth-child(1) { transition-delay: .0s; }
-    .stagger .fade-up:nth-child(2) { transition-delay: .1s; }
-    .stagger .fade-up:nth-child(3) { transition-delay: .2s; }
-    .stagger .fade-up:nth-child(4) { transition-delay: .3s; }
-    .stagger .fade-up:nth-child(5) { transition-delay: .4s; }
-    .stagger .fade-up:nth-child(6) { transition-delay: .5s; }
+    /* Grass divider */
+    .grass-divider {
+      width: 100%;
+      height: 18px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 18'%3E%3Cpath d='M0,14 Q2.5,2 5,14 Q7.5,4 10,14 Q12.5,2 15,14 Q17.5,5 20,14 Q22.5,2 25,14 Q27.5,4 30,14 Q32.5,2 35,14 Q37.5,5 40,14 Q42.5,2 45,14 Q47.5,4 50,14 Q52.5,2 55,14 Q57.5,5 60,14 Q62.5,2 65,14 Q67.5,4 70,14 Q72.5,2 75,14 Q77.5,5 80,14 Q82.5,2 85,14 Q87.5,4 90,14 Q92.5,2 95,14 Q97.5,5 100,14 Q102.5,2 105,14 Q107.5,4 110,14 Q112.5,2 115,14 Q117.5,5 120,14 Q122.5,2 125,14 Q127.5,4 130,14 Q132.5,2 135,14 Q137.5,5 140,14 Q142.5,2 145,14 Q147.5,4 150,14 Q152.5,2 155,14 Q157.5,5 160,14 Q162.5,2 165,14 Q167.5,4 170,14 Q172.5,2 175,14 Q177.5,5 180,14 Q182.5,2 185,14 Q187.5,4 190,14 Q192.5,2 195,14 Q197.5,5 200,14 L200,18 L0,18 Z' fill='%235DBB2A'/%3E%3C/svg%3E") repeat-x;
+      background-size: 200px 18px;
+    }
 
-    /* ─── Responsive ─────────────────────────────────────────── */
+    /* ── RESPONSIVE ─────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .why-inner { grid-template-columns: 1fr; }
+      .why-image-wrap { display: none; }
+      .about { grid-template-columns: 1fr; }
+      .about-image { height: 340px; }
+    }
+
     @media (max-width: 768px) {
-      nav ul { display: none; }
-      .about-grid     { grid-template-columns: 1fr; }
-      .strength-grid  { grid-template-columns: 1fr; }
-      .skills-grid    { grid-template-columns: 1fr; }
-      .edu-card       { grid-template-columns: 1fr; padding: 36px 28px; }
-      .edu-gpa-block  { text-align: left; }
-      .exp-card       { grid-template-columns: 1fr; }
-      section         { padding: 72px 20px; }
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .contact-inner { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .cta-strip { flex-direction: column; text-align: center; }
+      .cta-strip-actions { justify-content: center; }
+      .hero-content { padding: 0 6%; }
+    }
+
+    @media (max-width: 480px) {
+      .trust-bar { gap: 1rem 2rem; }
+      .why-stats { grid-template-columns: 1fr 1fr; gap: 1rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ─── Nav ──────────────────────────────────────────────── -->
-  <nav>
-    <a href="#hero" class="logo">Jackson Gaby</a>
-    <ul>
-      <li><a href="#about">About</a></li>
-      <li><a href="#strengths">Strengths</a></li>
-      <li><a href="#education">Education</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#experience">Experience</a></li>
-    </ul>
-    <a href="#contact" class="cta">Contact</a>
-  </nav>
+<!-- ════════════════════════════════════════════
+     NAVIGATION
+════════════════════════════════════════════ -->
+<nav>
+  <a href="#home" class="nav-logo">
+    <div class="logo-mark">
+      <div class="logo-row">
+        <div class="logo-c">C</div>
+        <span class="logo-word">ARTER'S</span>
+      </div>
+      <div class="logo-row">
+        <div class="logo-c">C</div>
+        <span class="logo-word">UTS</span>
+      </div>
+      <div class="logo-grass"></div>
+      <div class="logo-sub-text">Lawncare &amp; Landscaping</div>
+    </div>
+  </a>
 
-  <!-- ─── Hero ─────────────────────────────────────────────── -->
-  <section id="hero">
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="tel:6164038207" class="nav-cta">Call Now</a>
+
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="toggleMenu()">About</a>
+  <a href="#services" onclick="toggleMenu()">Services</a>
+  <a href="#gallery" onclick="toggleMenu()">Gallery</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
+  <a href="tel:6164038207" onclick="toggleMenu()">📞 616-403-8207</a>
+</div>
+
+
+<!-- ════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════ -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
     <div class="hero-badge">
-      <span>Available</span> Spring 2026 · Goshen, IN
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><circle cx="6" cy="6" r="6"/></svg>
+      Serving Allendale, MI &amp; Surrounding Cities
     </div>
-    <h1 class="hero-name">Jackson Gaby</h1>
-    <p class="hero-title">
-      Accounting Professional &amp; CPA Candidate<br>
-      Grand Valley State University · GPA 3.6
+    <h1 class="hero-title">
+      Your Lawn.<br>
+      <span>Our Passion.</span><br>
+      Every Cut Counts.
+    </h1>
+    <p class="hero-tagline">
+      Professional, reliable lawncare and landscaping that transforms your property — season after season. We don't just cut grass; we create curb appeal you'll be proud of.
     </p>
-    <div class="hero-ctas">
-      <a href="#strengths" class="btn-primary">View My Strengths</a>
-      <a href="#contact"   class="btn-secondary">Get In Touch</a>
+    <div class="hero-actions">
+      <a href="#contact" class="btn btn-primary">Get a Free Quote</a>
+      <a class="hero-phone" href="tel:6164038207">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.82 19.79 19.79 0 01.02 1.18 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+        </svg>
+        616-403-8207
+      </a>
     </div>
-    <div class="scroll-hint">
-      <svg viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-      Scroll
-    </div>
-  </section>
+  </div>
+  <div class="hero-scroll">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    Scroll
+  </div>
+</section>
 
-  <!-- ─── About ────────────────────────────────────────────── -->
-  <section id="about">
-    <div class="container">
-      <div class="about-grid">
-        <div class="fade-up">
-          <p class="eyebrow">About Me</p>
-          <h2 class="section-title">Turning precision into&nbsp;results.</h2>
-          <p class="section-sub">
-            I'm a driven accounting student at Grand Valley State University with a 3.6 GPA,
-            pursuing my CPA certification. My background spans financial analysis, managerial
-            costing, and real-world experience that has built adaptability, strong teamwork,
-            and meticulous attention to detail.
-          </p>
+
+<!-- ════════════════════════════════════════════
+     TRUST BAR
+════════════════════════════════════════════ -->
+<div class="trust-bar">
+  <div class="trust-item">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    Licensed &amp; Insured
+  </div>
+  <div class="trust-item">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    Dependable Scheduling
+  </div>
+  <div class="trust-item">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    Quality Guaranteed
+  </div>
+  <div class="trust-item">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+    Locally Owned &amp; Operated
+  </div>
+  <div class="trust-item">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+    5-Star Rated Service
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════
+     ABOUT
+════════════════════════════════════════════ -->
+<section class="about" id="about">
+  <div class="about-image">
+    <img src="N1.jpg" alt="Carter's Cuts – beautifully maintained residential lawn" />
+    <div class="about-image-badge">
+      <strong>100%</strong>
+      Satisfaction<br>Guarantee
+    </div>
+  </div>
+  <div class="about-content">
+    <span class="section-label">Who We Are</span>
+    <h2 class="section-title">West Michigan's Most <span>Trusted</span> Lawn Crew</h2>
+    <p class="section-sub">
+      Carter's Cuts is a locally owned lawncare and landscaping company proudly rooted in Allendale, MI. We bring expert-level precision and a genuine passion for the outdoors to every job — from residential lawns to large commercial properties across West Michigan.
+    </p>
+    <div class="about-checks">
+      <div class="about-check">
+        <div class="check-icon">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
-        <div class="about-stat-grid stagger">
-          <div class="stat-card fade-up">
-            <div class="stat-value">3.6</div>
-            <div class="stat-label">Cumulative GPA at GVSU</div>
-          </div>
-          <div class="stat-card fade-up">
-            <div class="stat-value">150</div>
-            <div class="stat-label">Credits toward CPA certification</div>
-          </div>
-          <div class="stat-card fade-up">
-            <div class="stat-value">7+</div>
-            <div class="stat-label">Years of professional work experience</div>
-          </div>
-          <div class="stat-card fade-up">
-            <div class="stat-value">2027</div>
-            <div class="stat-label">Target CPA completion year</div>
-          </div>
-        </div>
+        Year-round property care — spring through winter
       </div>
-    </div>
-  </section>
-
-  <!-- ─── Strengths ─────────────────────────────────────────── -->
-  <section id="strengths">
-    <div class="container-wide">
-      <div class="strengths-header fade-up">
-        <p class="eyebrow">Core Strengths</p>
-        <h2 class="section-title">Built for accounting.<br>Refined through experience.</h2>
-        <p class="section-sub">
-          Every role I've held has sharpened the skills that matter most in finance — from tracking equipment performance to interpreting blueprints with precision.
-        </p>
+      <div class="about-check">
+        <div class="check-icon">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        Precision mowing with signature striping patterns
       </div>
-      <div class="strength-grid stagger">
-
-        <div class="strength-card fade-up">
-          <div class="strength-icon ic-blue">🎯</div>
-          <h3>Detail-Oriented</h3>
-          <p>Tracked equipment performance and enforced precision on every fabricated part — the same mindset I apply to ensuring accuracy in financial records and reports.</p>
+      <div class="about-check">
+        <div class="check-icon">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
-
-        <div class="strength-card fade-up">
-          <div class="strength-icon ic-green">🗂️</div>
-          <h3>Organizational Mastery</h3>
-          <p>Created dynamic task schedules and adjusted priorities in real time based on shifting conditions — directly transferable to managing multiple accounting deadlines simultaneously.</p>
+        Flexible scheduling to fit your life
+      </div>
+      <div class="about-check">
+        <div class="check-icon">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
-
-        <div class="strength-card fade-up">
-          <div class="strength-icon ic-purple">🤝</div>
-          <h3>Team Collaboration</h3>
-          <p>Coordinated with 6–8 crew members to deliver large-scale projects on time, mirroring the teamwork required in accounting teams, audits, and cross-functional finance roles.</p>
-        </div>
-
-        <div class="strength-card fade-up">
-          <div class="strength-icon ic-orange">📐</div>
-          <h3>Analytical Thinking</h3>
-          <p>Applied blueprints with precision and conducted product costing, activity-based costing, and volume-profit analysis — translating complex data into actionable insight.</p>
-        </div>
-
-        <div class="strength-card fade-up">
-          <div class="strength-icon ic-pink">⚡</div>
-          <h3>Adaptability</h3>
-          <p>Quickly mastered new machinery, safety protocols, and welding positions across varied conditions — building the flexibility needed to learn new accounting systems and procedures fast.</p>
-        </div>
-
-        <div class="strength-card fade-up">
-          <div class="strength-icon ic-teal">🔍</div>
-          <h3>Problem Solving</h3>
-          <p>Identified opportunities for more efficient fabrication workflows and reduced production delays — the same critical thinking I bring to improving accounting processes and procedures.</p>
-        </div>
-
+        Serving Allendale, Grand Rapids, Coopersville &amp; more
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ─── Education ─────────────────────────────────────────── -->
-  <section id="education">
-    <div class="container">
-      <div class="fade-up">
-        <p class="eyebrow">Education</p>
-        <h2 class="section-title">Academic excellence.</h2>
+
+<!-- ════════════════════════════════════════════
+     SERVICES
+════════════════════════════════════════════ -->
+<section class="services" id="services">
+  <div class="services-header">
+    <span class="section-label">What We Do</span>
+    <h2 class="section-title">Full-Service Lawncare &amp; <span>Landscaping</span></h2>
+    <p class="section-sub">
+      From spring startups to winter cleanups, we've got every season covered with professional, efficient service you can count on.
+    </p>
+  </div>
+
+  <div class="services-grid">
+
+    <!-- Lawn Mowing -->
+    <div class="service-card">
+      <div class="service-img">
+        <img src="g1.jpg" alt="Precision lawn mowing" />
       </div>
-      <div class="edu-card fade-up" style="margin-top:48px;">
-        <div>
-          <p class="eyebrow">Bachelor of Business Administration</p>
-          <h3 class="edu-school">Grand Valley State University</h3>
-          <p class="edu-degree">B.B.A. in Accounting · Anticipated Graduation April 2026</p>
-          <div>
-            <span class="edu-tag">Financial Accounting</span>
-            <span class="edu-tag">Managerial Finance</span>
-            <span class="edu-tag">Intermediate Accounting I &amp; II</span>
-            <span class="edu-tag">Taxation</span>
-            <span class="edu-tag">Business Law</span>
-            <span class="edu-tag">Managerial Accounting</span>
+      <div class="service-body">
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+        </div>
+        <h3>Lawn Mowing &amp; Maintenance</h3>
+        <p>Consistent, precision-cut mowing with detailed edging and cleanup — leaving your lawn with sharp lines and those beautiful striped patterns every time.</p>
+      </div>
+    </div>
+
+    <!-- Mulching -->
+    <div class="service-card">
+      <div class="service-img">
+        <img src="MULCH.jpg" alt="Mulching and bed care" />
+      </div>
+      <div class="service-body">
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22V12M12 12C12 7 7 3 2 3c0 5 4 9 10 9zM12 12c0-5 5-9 10-9-1 5-5 9-10 9"/>
+          </svg>
+        </div>
+        <h3>Mulching &amp; Bed Care</h3>
+        <p>Fresh mulch installation that boosts curb appeal, retains moisture, suppresses weeds, and gives your landscape beds a clean, polished look.</p>
+      </div>
+    </div>
+
+    <!-- Seasonal Cleanup -->
+    <div class="service-card">
+      <div class="service-img">
+        <img src="LEAF REMOVAL.jpg" alt="Fall leaf cleanup" />
+      </div>
+      <div class="service-body">
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17.5 19H9a7 7 0 116.71-9h1.79a4.5 4.5 0 110 9z"/>
+          </svg>
+        </div>
+        <h3>Fall Leaf Cleanup</h3>
+        <p>Thorough leaf removal and haul-away service that protects your lawn heading into winter. We leave your property spotless and ready for the cold months.</p>
+      </div>
+    </div>
+
+    <!-- Snow Removal -->
+    <div class="service-card">
+      <div class="service-img">
+        <img src="SNOW REMOVAL.jpg" alt="Snow removal" />
+      </div>
+      <div class="service-body">
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="2" x2="12" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+          </svg>
+        </div>
+        <h3>Snow Removal</h3>
+        <p>Fast, reliable snow plowing and removal to keep your driveways, walkways, and parking areas safe and accessible all winter long.</p>
+      </div>
+    </div>
+
+    <!-- Landscaping -->
+    <div class="service-card">
+      <div class="service-img">
+        <img src="FULL PROPERTY LANDSCAPING .jpg" alt="Full property landscaping" />
+      </div>
+      <div class="service-body">
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/>
+          </svg>
+        </div>
+        <h3>Full Property Landscaping</h3>
+        <p>Complete landscaping design and execution for residential and commercial properties — transforming outdoor spaces into something you're proud to show off.</p>
+      </div>
+    </div>
+
+    <!-- Mulch & Material Delivery -->
+    <div class="service-card">
+      <div class="service-img">
+        <img src="DELIVERY.jpg" alt="Mulch and material delivery" />
+      </div>
+      <div class="service-body">
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+          </svg>
+        </div>
+        <h3>Mulch &amp; Material Delivery</h3>
+        <p>Need bulk mulch, topsoil, or landscaping materials delivered right to your door? We've got you covered — quality materials dropped off when and where you need them.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+<!-- ════════════════════════════════════════════
+     WHY CHOOSE US
+════════════════════════════════════════════ -->
+<section class="why">
+  <div class="why-inner">
+    <div class="why-content">
+      <span class="section-label">Why Carter's Cuts</span>
+      <h2 class="section-title" style="color:white;">We Treat Your Property <span>Like Our Own</span></h2>
+      <p class="section-sub">
+        At Carter's Cuts, our commitment goes far beyond a clean cut. With over a decade of hands-on experience across West Michigan, we've built our reputation on consistency, craftsmanship, and genuine care for every property we touch. From the first visit of spring to the final cleanup of fall, you'll always receive the same high standard — because that's what our clients deserve, and that's who we are.
+      </p>
+      <div class="why-stats">
+        <div class="stat-box">
+          <div class="stat-num">1,000+</div>
+          <div class="stat-label">Properties Maintained</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">10+</div>
+          <div class="stat-label">Years in Service</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">5★</div>
+          <div class="stat-label">Customer Rating</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Satisfaction Guarantee</div>
+        </div>
+      </div>
+      <a href="#contact" class="btn btn-primary" style="margin-top:2rem;">Request a Free Estimate</a>
+    </div>
+    <div class="why-image-wrap">
+      <div class="wi-full">
+        <img src="WT1.jpg" alt="Precision striped commercial lawn" />
+      </div>
+      <div class="wi-half">
+        <img src="WT2.jpg" alt="Residential lawncare" />
+      </div>
+      <div class="wi-half">
+        <img src="WT3.jpg" alt="Property maintenance" />
+      </div>
+      <div class="wi-ba">
+        <span class="wi-ba-label">Before</span>
+        <img src="WT4 (leaf removal before).jpg" alt="Before leaf removal" />
+      </div>
+      <div class="wi-ba">
+        <span class="wi-ba-label after">After</span>
+        <img src="WT5 (leaf removal after) .jpg" alt="After leaf removal" />
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════
+     CTA STRIP
+════════════════════════════════════════════ -->
+<div class="cta-strip">
+  <div class="cta-strip-text">
+    <h2>Ready for a Lawn You'll Love?</h2>
+    <p>Call today or fill out our quick form — we'll get back to you fast.</p>
+  </div>
+  <div class="cta-strip-actions">
+    <a href="tel:6164038207" class="btn btn-dark">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.82 19.79 19.79 0 01.02 1.18 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+      616-403-8207
+    </a>
+    <a href="#contact" class="btn btn-outline">Get a Free Quote</a>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════
+     CONTACT
+════════════════════════════════════════════ -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="contact-info">
+      <span class="section-label">Get in Touch</span>
+      <h2>Let's Talk About<br>Your Lawn</h2>
+      <p>Whether you need a one-time cleanup or a full-season maintenance plan, we're ready to help. Reach out — estimates are always free.</p>
+
+      <div class="contact-details">
+        <div class="contact-detail">
+          <div class="contact-detail-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.82 19.79 19.79 0 01.02 1.18 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
           </div>
-          <div class="edu-cpa">
-            <h4>🏆 CPA Certification Candidate</h4>
-            <p>Pursuing 150-credit CPA certification · Anticipated Completion April 2027</p>
+          <div class="contact-detail-text">
+            <strong>Phone</strong>
+            <a href="tel:6164038207">616-403-8207</a>
           </div>
         </div>
-        <div class="edu-gpa-block">
-          <div class="edu-gpa-num">3.6</div>
-          <div class="edu-gpa-label">Cumulative GPA</div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div class="contact-detail-text">
+            <strong>Service Area</strong>
+            <span>Allendale, MI &amp; Surrounding Cities</span>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div class="contact-detail-text">
+            <strong>Season</strong>
+            <span>Spring through Winter — Year-Round Service</span>
+          </div>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- ─── Skills ───────────────────────────────────────────── -->
-  <section id="skills">
-    <div class="container">
-      <div class="fade-up">
-        <p class="eyebrow">Technical Skills</p>
-        <h2 class="section-title">Tools of the trade.</h2>
-      </div>
-      <div class="skills-grid">
-
-        <div class="skill-group fade-up">
-          <h3>Microsoft 365</h3>
-          <div class="skill-item">
-            <div class="skill-dot"></div>
-            <span class="skill-name">Excel</span>
-            <div class="skill-bar-wrap"><div class="skill-bar" style="--w:.9"></div></div>
+    <div class="contact-form">
+      <h3>Request a Free Estimate</h3>
+      <form onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fname">First Name</label>
+            <input type="text" id="fname" name="fname" placeholder="John" required />
           </div>
-          <div class="skill-item">
-            <div class="skill-dot"></div>
-            <span class="skill-name">Word</span>
-            <div class="skill-bar-wrap"><div class="skill-bar" style="--w:.85"></div></div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-dot"></div>
-            <span class="skill-name">PowerPoint</span>
-            <div class="skill-bar-wrap"><div class="skill-bar" style="--w:.85"></div></div>
+          <div class="form-group">
+            <label for="lname">Last Name</label>
+            <input type="text" id="lname" name="lname" placeholder="Smith" required />
           </div>
         </div>
-
-        <div class="skill-group fade-up">
-          <h3>Google Workspace</h3>
-          <div class="skill-item">
-            <div class="skill-dot"></div>
-            <span class="skill-name">Google Sheets</span>
-            <div class="skill-bar-wrap"><div class="skill-bar" style="--w:.88"></div></div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="616-000-0000" required />
           </div>
-          <div class="skill-item">
-            <div class="skill-dot"></div>
-            <span class="skill-name">Google Drive</span>
-            <div class="skill-bar-wrap"><div class="skill-bar" style="--w:.9"></div></div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-dot"></div>
-            <span class="skill-name">Google Slides</span>
-            <div class="skill-bar-wrap"><div class="skill-bar" style="--w:.82"></div></div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="you@email.com" />
           </div>
         </div>
-
-        <div class="skill-group fade-up" style="grid-column: span 2;">
-          <h3>Accounting &amp; Finance Coursework</h3>
-          <div class="course-tags">
-            <span class="course-tag">Product &amp; Activity-Based Costing</span>
-            <span class="course-tag">Variable Costing</span>
-            <span class="course-tag">Volume-Profit Relationships</span>
-            <span class="course-tag">Financial Accounting</span>
-            <span class="course-tag">Managerial Finance</span>
-            <span class="course-tag">Intermediate Accounting I</span>
-            <span class="course-tag">Intermediate Accounting II</span>
-            <span class="course-tag">Taxation</span>
-            <span class="course-tag">Business Law</span>
-          </div>
+        <div class="form-group">
+          <label for="service">Service Needed</label>
+          <select id="service" name="service">
+            <option value="">Select a service...</option>
+            <option>Lawn Mowing &amp; Maintenance</option>
+            <option>Mulching &amp; Bed Care</option>
+            <option>Fall Leaf Cleanup</option>
+            <option>Snow Removal</option>
+            <option>Full Property Landscaping</option>
+            <option>Mulch &amp; Material Delivery</option>
+            <option>Multiple Services / Other</option>
+          </select>
         </div>
-
-      </div>
+        <div class="form-group">
+          <label for="message">Tell Us About Your Property</label>
+          <textarea id="message" name="message" placeholder="Property size, address, any specific needs..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send My Free Estimate Request</button>
+      </form>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ─── Experience ────────────────────────────────────────── -->
-  <section id="experience">
-    <div class="container">
-      <div class="fade-up">
-        <p class="eyebrow">Work History</p>
-        <h2 class="section-title">Experience that translates.</h2>
-        <p class="section-sub">Every job has sharpened a skill that matters in accounting.</p>
-      </div>
 
-      <div class="exp-timeline">
-
-        <div class="exp-card fade-up">
-          <div>
-            <h3 class="exp-role">Grounds Crew</h3>
-            <p class="exp-company">Maple Crest Country Club · Goshen, IN</p>
-            <ul class="exp-bullets">
-              <li>Applied a detail-oriented approach by tracking equipment performance and performing regular maintenance, ensuring tools remained reliable — similar to ensuring accuracy in financial records.</li>
-              <li>Strengthened organizational skills by creating task schedules and adjusting priorities based on weather or project demands — directly transferable to managing multiple accounting deadlines.</li>
-              <li>Promoted teamwork by coordinating with 6–8 crew members to complete large-scale projects on time, mirroring the collaboration required in accounting teams and audits.</li>
-              <li>Demonstrated an eagerness to learn by quickly mastering new machinery, safety protocols, and workflow changes, building adaptability for new accounting systems and procedures.</li>
-            </ul>
+<!-- ════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════ -->
+<div class="grass-divider"></div>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="nav-logo" style="pointer-events:none;">
+        <div class="logo-mark">
+          <div class="logo-row">
+            <div class="logo-c">C</div>
+            <span class="logo-word">ARTER'S</span>
           </div>
-          <div class="exp-badge">
-            <div class="date">May 2018 – Present</div>
-            <div class="status">Current</div>
+          <div class="logo-row">
+            <div class="logo-c">C</div>
+            <span class="logo-word">UTS</span>
           </div>
+          <div class="logo-grass"></div>
+          <div class="logo-sub-text">Lawncare &amp; Landscaping</div>
         </div>
-
-        <div class="exp-card fade-up">
-          <div>
-            <h3 class="exp-role">Welder</h3>
-            <p class="exp-company">Jomar Machining and Fabricating · Middlebury, IN</p>
-            <ul class="exp-bullets">
-              <li>Interpreted and applied blueprints with precision, demonstrating strong analytical skills and a commitment to accuracy across all fabricated parts.</li>
-              <li>Consistently organized tools and maintained a safe workspace, highlighting time management and reliability in meeting production deadlines.</li>
-              <li>Adapted to various welding positions — flat, horizontal, vertical, and overhead — showcasing adaptability and a focus on delivering consistent results under different conditions.</li>
-              <li>Identified opportunities for more efficient fabrication processes, applying problem-solving to improve workflow and reduce delays — experience directly transferable to accounting procedures.</li>
-            </ul>
-          </div>
-          <div class="exp-badge">
-            <div class="date">May 2019 – Aug 2019</div>
-            <div class="status past">Seasonal</div>
-          </div>
-        </div>
-
       </div>
+      <p class="footer-tagline">Professional, reliable lawncare and landscaping serving Allendale, MI and surrounding West Michigan communities — every season of the year.</p>
+      <a class="footer-phone-link" href="tel:6164038207">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.82 19.79 19.79 0 01.02 1.18 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+        616-403-8207
+      </a>
     </div>
-  </section>
 
-  <!-- ─── Contact ───────────────────────────────────────────── -->
-  <section id="contact">
-    <div class="container">
-      <div class="fade-up" style="text-align:center;">
-        <p class="eyebrow">Contact</p>
-        <h2 class="section-title">Let's connect.</h2>
-        <p class="section-sub" style="margin:16px auto 0;">
-          Ready to bring detail, discipline, and drive to your organization.
-        </p>
-      </div>
-
-      <div class="contact-card fade-up">
-        <div class="contact-links">
-
-          <a href="tel:5743705197" class="contact-link">
-            <div class="contact-link-icon">
-              <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .99h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
-              </svg>
-            </div>
-            <div class="contact-link-text">
-              <div class="contact-link-label">Phone</div>
-              <div class="contact-link-value">(574) 370-5197</div>
-            </div>
-          </a>
-
-          <a href="mailto:jrgaby35@gmail.com" class="contact-link">
-            <div class="contact-link-icon">
-              <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                <polyline points="22,6 12,13 2,6"/>
-              </svg>
-            </div>
-            <div class="contact-link-text">
-              <div class="contact-link-label">Email</div>
-              <div class="contact-link-value">jrgaby35@gmail.com</div>
-            </div>
-          </a>
-
-          <a href="#" class="contact-link">
-            <div class="contact-link-icon">
-              <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-                <circle cx="12" cy="10" r="3"/>
-              </svg>
-            </div>
-            <div class="contact-link-text">
-              <div class="contact-link-label">Location</div>
-              <div class="contact-link-value">Goshen, IN 46526</div>
-            </div>
-          </a>
-
-        </div>
-      </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Lawn Mowing</a></li>
+        <li><a href="#services">Mulching &amp; Bed Care</a></li>
+        <li><a href="#services">Fall Leaf Cleanup</a></li>
+        <li><a href="#services">Snow Removal</a></li>
+        <li><a href="#services">Landscaping</a></li>
+        <li><a href="#services">Mulch &amp; Material Delivery</a></li>
+      </ul>
     </div>
-  </section>
 
-  <!-- ─── Footer ────────────────────────────────────────────── -->
-  <footer>
-    <p>© 2026 <span>Jackson Gaby</span> · Accounting Professional · Grand Valley State University</p>
-  </footer>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="tel:6164038207">Call Now</a></li>
+      </ul>
+    </div>
+  </div>
 
-  <!-- ─── JS ────────────────────────────────────────────────── -->
-  <script>
-    document.documentElement.classList.add('js');
+  <div class="footer-bottom">
+    <p>&copy; 2025 Carter's Cuts Lawncare &amp; Landscaping. All rights reserved.</p>
+    <span>Allendale, MI | <a href="tel:6164038207">616-403-8207</a></span>
+  </div>
+</footer>
 
-    // Intersection Observer for fade-up animations
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
 
-    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+<!-- ════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════ -->
+<script>
+  /* Mobile menu */
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
 
-    // Skill bar animation
-    const barObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.querySelectorAll('.skill-bar').forEach((bar, i) => {
-            setTimeout(() => {
-              bar.style.transform = `scaleX(${bar.style.getPropertyValue('--w') || 1})`;
-              bar.classList.add('animate');
-            }, i * 120);
-          });
-          barObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.3 });
+  /* Form */
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.form-submit');
+    btn.textContent = 'Sent! We\'ll be in touch soon.';
+    btn.style.background = '#3d8a18';
+    btn.disabled = true;
+  }
 
-    document.querySelectorAll('.skill-group').forEach(el => barObserver.observe(el));
+  /* Nav background on scroll */
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 60) {
+      nav.style.background = 'rgba(10,10,10,0.97)';
+    } else {
+      nav.style.background = 'rgba(10,10,10,0.88)';
+    }
+  });
 
-    // Nav active state on scroll
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('nav ul a');
+  /* Smooth reveal on scroll */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
 
-    window.addEventListener('scroll', () => {
-      let current = '';
-      sections.forEach(s => {
-        if (window.scrollY >= s.offsetTop - 80) current = s.id;
-      });
-      navLinks.forEach(a => {
-        a.style.color = a.getAttribute('href') === '#' + current
-          ? 'var(--text)' : '';
-      });
-    }, { passive: true });
-  </script>
+  document.querySelectorAll('.service-card, .stat-box, .about-check, .gallery-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+
 </body>
 </html>
